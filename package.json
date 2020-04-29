@@ -4,7 +4,7 @@
   "author": "F5 Networks",
   "license": "Apache-2.0",
   "main": "index.js",
-  "description": "",
+  "description": "The core module for F5 Application Services Templates",
   "scripts": {
     "test": "mocha --recursive \"./test/*.js\"",
     "lint": "eslint lib test cli.js",
