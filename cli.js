@@ -6,6 +6,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const yaml = require('js-yaml');
 
 const Template = require('./lib/template').Template;
 const FsTemplateProvider = require('./lib/template_provider').FsTemplateProvider;
@@ -27,7 +28,7 @@ const loadTemplate = (templatePath) => {
 const loadParameters = (parametersPath) => {
     if (!parametersPath) return Promise.resolve({});
     return fs.readFile(parametersPath, 'utf8')
-        .then(paramsData => JSON.parse(paramsData));
+        .then(paramsData => yaml.safeLoad(paramsData));
 };
 
 const loadTemplateAndParameters = (templatePath, parametersPath) => Promise.all([
