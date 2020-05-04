@@ -1,4 +1,6 @@
 ![Pipeline](https://github.com/f5devcentral/f5-fast-core/workflows/Pipeline/badge.svg)
+![npm](https://img.shields.io/npm/dw/@f5devcentral/f5-fast-core)
+![NPM](https://img.shields.io/npm/l/@f5devcentral/f5-fast-core?registry_uri=https%3A%2F%2Fregistry.npmjs.com)
 
 # F5 Application Services Templates (FAST) SDK
 
