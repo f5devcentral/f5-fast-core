@@ -1,3 +1,5 @@
+![Pipeline](https://github.com/f5devcentral/f5-fast-core/workflows/Pipeline/badge.svg)
+
 # F5 Application Services Templates (FAST) SDK
 
 This module provides a framework for handling templates.
