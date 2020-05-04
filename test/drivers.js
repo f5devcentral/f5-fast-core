@@ -187,6 +187,21 @@ describe('AS3 Driver tests', function () {
 
         return assert.isFulfilled(driver.deleteApplication('tenantName', 'appName'));
     });
+    it('delete_all_apps', function () {
+        const driver = new AS3Driver();
+        nock(host)
+            .persist()
+            .get(as3ep)
+            .reply(200, as3WithApp);
+
+        nock(host)
+            .persist()
+            .post(as3ep)
+            .query(true)
+            .reply(202, {});
+
+        return assert.isFulfilled(driver.deleteApplications());
+    });
     it('create_app_bad', function () {
         const driver = new AS3Driver();
 

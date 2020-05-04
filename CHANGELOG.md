@@ -1,6 +1,7 @@
 # v0.5
 ## Added
 * CLI: Support YAML for parameter files
+* AS3 driver: Add deleteApplications() function
 
 ## Fixed
 
