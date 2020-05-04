@@ -59,7 +59,7 @@ describe('TransactionLogger', function () {
                     called = true;
                     assert.strictEqual(transaction, 'a transaction');
                     assert.ok(exitTime);
-                    assert.ok(deltaTime);
+                    assert.notStrictEqual(typeof deltaTime, 'undefined');
                 }
             );
             tl.enter('a transaction');
