@@ -25,6 +25,7 @@ function runSharedTests(createProvider) {
         return provider.list()
             .then((tmplList) => {
                 assert.deepStrictEqual(tmplList.sort(), [
+                    'test/combine',
                     'test/complex',
                     'test/simple',
                     'test/simple_udp'
@@ -88,11 +89,11 @@ function runSharedTests(createProvider) {
         const provider = createProvider();
         return assert.becomes(provider.getNumTemplateSourceTypes('test'), {
             MST: 1,
-            YAML: 2
+            YAML: 3
         })
             .then(() => assert.becomes(provider.getNumTemplateSourceTypes(), {
                 MST: 1,
-                YAML: 2
+                YAML: 3
             }));
     });
     it('num_schemas', function () {
@@ -121,6 +122,7 @@ function runSharedTests(createProvider) {
 
                 const tmplNames = setData.templates.map(x => x.name).sort();
                 assert.deepStrictEqual(tmplNames, [
+                    'test/combine',
                     'test/complex',
                     'test/simple',
                     'test/simple_udp'

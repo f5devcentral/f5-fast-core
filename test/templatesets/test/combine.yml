@@ -1,0 +1,13 @@
+definitions:
+    prop1:
+        title: "Property 1"
+    prop2:
+        title: "Property 2"
+    selection:
+        oneOf:
+            - title: "Template A"
+              template: "{{prop1}}"
+            - title: "Template B"
+              template: "{{prop1}}{{prop2}}"
+template: |
+    {{selection}}

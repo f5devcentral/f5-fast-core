@@ -2,6 +2,7 @@
 ## Added
 * CLI: Support YAML for parameter files
 * AS3 driver: Add deleteApplications() function
+* Support oneOf/anyOf/allOf for combining templates
 
 ## Fixed
 
