@@ -6,6 +6,20 @@
       "minimum": 0,
       "maximum": 65535,
       "default": 443
+    },
+    "ipv4_addr": {
+        "title": "IPv4 Address",
+        "type": "string"
+    },
+    "ipv6_addr": {
+        "title": "IPv6 Address",
+        "type": "string"
+    },
+    "ip_addr": {
+        "anyOf": [
+            {"$ref": "#/definitions/ipv4_addr"},
+            {"$ref": "#/definitions/ipv6_addr"}
+        ]
     }
   }
 }

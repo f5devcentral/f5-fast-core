@@ -19,7 +19,7 @@ Uses AS3 template: udp.
         "serviceMain": {
           "class": "Service_UDP",
           "virtualAddresses": [
-            "{{virtual_address}}"
+            "{{virtual_address:types:ip_addr}}"
           ],
           "virtualPort": {{virtual_port::integer}},
           "pool": "Pool1"
