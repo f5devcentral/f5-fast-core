@@ -85,7 +85,7 @@ const ymldata = `
 
 fast.Template.loadYaml(ymldata)
     .then((template) => {
-        console.log(template.getViewSchema());
+        console.log(template.getParametersSchema());
         console.log(template.render({message: "Hello world!"}));
     });
 ```
@@ -99,7 +99,7 @@ const mstdata = '{{message}}';
 
 fast.Template.loadMst(ymldata)
     .then((template) => {
-        console.log(template.getViewSchema());
+        console.log(template.getParametersSchema());
         console.log(template.render({message: "Hello world!"}));
     });
 ```
@@ -116,7 +116,7 @@ const mstdata = '{{virtual_port:types:port}}';
 
 fast.Template.loadMst(mstdata, schemaProvider)
     .then((template) => {
-        console.log(template.getViewSchema());
+        console.log(template.getParametersSchema());
         console.log(template.render({virtual_port: 443});
     });
 ```
@@ -133,7 +133,7 @@ const templateProvider = new fast.FsTemplateProvider(templatesPath);
 
 templateProvider.fetch('templateSetName/templateName')
     .then((template) => {
-        console.log(template.getViewSchema());
+        console.log(template.getParametersSchema());
         console.log(template.render({
             var: "value",
             boolVar: false
