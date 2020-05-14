@@ -594,4 +594,24 @@ describe('Template class tests', function () {
                 assert.match(e.message, /Parsing references failed/);
             });
     });
+    it('ref_fail_parent_dir', function () {
+        const ymldata = `
+            definitions:
+                foo:
+                    type: string
+                ref:
+                    $ref: "../foo.json#/definitions/foo"
+            template: |
+                {{ref}}
+        `;
+
+        return Template.loadYaml(ymldata)
+            .then(() => {
+                assert(false, 'should have failed on a parent directory reference');
+            })
+            .catch((e) => {
+                console.log(e.message);
+                assert.match(e.message, /Parsing references failed/);
+            });
+    });
 });
