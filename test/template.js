@@ -435,6 +435,26 @@ describe('Template class tests', function () {
                 assert.strictEqual(tmpl.render(parameters).trim(), reference);
             });
     });
+    it('render_ref_partial', function () {
+        const ymldata = `
+            definitions:
+                data:
+                    template: |
+                        {{foo}}
+                ref:
+                    $ref: "#/definitions/data"
+            template: |
+                {{> ref}}
+        `;
+        const parameters = { foo: 'bar' };
+        const reference = 'bar';
+
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
+                assert.strictEqual(tmpl.render(parameters).trim(), reference);
+            });
+    });
     it('schema_nested_sections', function () {
         const ymldata = `
             definitions:
