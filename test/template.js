@@ -576,4 +576,22 @@ describe('Template class tests', function () {
                 assert.strictEqual(schema.properties.https_port.default, 500);
             });
     });
+    it('ref_fail_http', function () {
+        const ymldata = `
+            definitions:
+                ref:
+                    $ref: "http://example.com/foo.json#/definitions/foo"
+            template: |
+                {{ref}}
+        `;
+
+        return Template.loadYaml(ymldata)
+            .then(() => {
+                assert(false, 'should have failed on http reference');
+            })
+            .catch((e) => {
+                console.log(JSON.stringify(e, null, 2));
+                assert.match(e.message, /Parsing references failed/);
+            });
+    });
 });
