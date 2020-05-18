@@ -19,5 +19,6 @@ oneOf:
           prop2:
               title: "Property 2"
 anyOf:
+    - {}
     - title: "Mixin"
       template: "{{mixin_prop}}"

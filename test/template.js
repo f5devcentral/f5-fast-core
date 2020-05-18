@@ -293,7 +293,7 @@ describe('Template class tests', function () {
                 );
             });
     });
-    it('schema_one_of', function () {
+    it('schema_x_of', function () {
         const ymldata = fs.readFileSync(`${templatesPath}/combine.yml`, 'utf8');
         return Template.loadYaml(ymldata)
             .then((tmpl) => {
@@ -311,7 +311,7 @@ describe('Template class tests', function () {
 
                 const anyOf = schema.anyOf;
                 assert.ok(anyOf);
-                assert.ok(anyOf[0].properties.mixin_prop);
+                assert.ok(anyOf[1].properties.mixin_prop);
             });
     });
     it('render', function () {
@@ -439,6 +439,24 @@ describe('Template class tests', function () {
             .then((tmpl) => {
                 console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
                 assert.strictEqual(tmpl.render(parameters).trim(), reference);
+            });
+    });
+    it('render_x_of', function () {
+        const ymldata = fs.readFileSync(`${templatesPath}/combine.yml`, 'utf8');
+        return Promise.resolve()
+            .then(() => Template.loadYaml(ymldata))
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+                const parameters = {
+                    name: 'foo',
+                    prop1: 'bar',
+                    mixin_prop: 'baz'
+                };
+                const reference = 'foo\nbaz\nbar';
+                const rendered = tmpl.render(parameters).trim();
+                console.log(JSON.stringify(parameters, null, 2));
+                assert.strictEqual(rendered, reference);
             });
     });
     it('schema_nested_sections', function () {
