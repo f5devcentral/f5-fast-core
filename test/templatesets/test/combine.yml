@@ -1,10 +1,23 @@
-definitions:
-    prop1:
-        title: "Property 1"
-    prop2:
-        title: "Property 2"
+title: Combining Templates
+description: An example of how to combine templates
+allOf:
+    - title: "Base Props"
+      template: "{{name}}"
+      definitions:
+          name:
+              title: Name
+              description: The application name
 oneOf:
     - title: "Template A"
-      template: "{{prop1}}"
+      template: "{{prop1::string}}"
+      definitions:
+          prop1:
+              title: "Property 1"
     - title: "Template B"
-      template: "{{prop1}}{{prop2}}"
+      template: "{{prop2::integer}}"
+      definitions:
+          prop2:
+              title: "Property 2"
+anyOf:
+    - title: "Mixin"
+      template: "{{mixin_prop}}"

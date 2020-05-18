@@ -293,18 +293,25 @@ describe('Template class tests', function () {
                 );
             });
     });
-    it.skip('schema_one_of', function () {
+    it('schema_one_of', function () {
         const ymldata = fs.readFileSync(`${templatesPath}/combine.yml`, 'utf8');
         return Template.loadYaml(ymldata)
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
                 console.log(JSON.stringify(schema, null, 2));
 
+                const allOf = schema.allOf;
+                assert.ok(allOf);
+                assert.ok(allOf[0].properties.name);
+
                 const oneOf = schema.oneOf;
                 assert.ok(oneOf);
                 assert.ok(oneOf[0].properties.prop1);
-                assert.ok(oneOf[1].properties.prop1);
                 assert.ok(oneOf[1].properties.prop2);
+
+                const anyOf = schema.anyOf;
+                assert.ok(anyOf);
+                assert.ok(anyOf[0].properties.mixin_prop);
             });
     });
     it('render', function () {
