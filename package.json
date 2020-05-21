@@ -46,13 +46,14 @@
     ],
     "exclude": [
       "lib/jsoneditor.js"
-   ]
+    ]
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.1",
     "ajv": "^6.12.2",
     "archiver": "^4.0.1",
     "atg-storage": "git+https://github.com/f5devcentral/atg-storage.git#ed472de",
+    "deepmerge": "^4.2.2",
     "js-yaml": "^3.13.1",
     "mustache": "^4.0.1",
     "uuid": "^8.0.0",
