@@ -2,11 +2,13 @@
 ## Added
 * CLI: Support YAML for parameter files
 * AS3 driver: Add deleteApplications() function
-* Support generating schema for combined (via oneOf/anyOf/allOf) templates
+* Support combining templates via oneOf/allOf/anyOf
+* Support $ref in template definitions (http $refs are not supported)
 
 ## Fixed
 
 ## Changed
+* Report a better error message when Ajv fails to compile a schema
 
 # v0.4
 Initial, independent release (previously part of [f5-appsvcs-templates](https://github.com/F5networks/f5-appsvcs-templates))
