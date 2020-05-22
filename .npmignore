@@ -1,3 +1,5 @@
 test/*
+dist/*
+scripts/*
 .nyc_output
 test-output.txt
