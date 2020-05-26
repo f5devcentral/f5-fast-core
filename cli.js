@@ -19,7 +19,10 @@ const loadTemplate = (templatePath) => {
     const provider = new FsTemplateProvider(tsDir, [tsName]);
     return provider.fetch(`${tsName}/${tmplName}`)
         .catch((e) => {
-            console.error(Template.getValidationErrors());
+            const validationErrors = Template.getValidationErrors();
+            if (validationErrors !== 'null') {
+                console.error(validationErrors);
+            }
             console.error(`failed to load template: ${e.stack}`);
             process.exit(1);
         });
