@@ -23,7 +23,7 @@ const loadTemplate = (templatePath) => {
             if (validationErrors !== 'null') {
                 console.error(validationErrors);
             }
-            console.error(`failed to load template: ${e.stack}`);
+            console.error(`failed to load template\n${e.stack}`);
             process.exit(1);
         });
 };
@@ -31,7 +31,11 @@ const loadTemplate = (templatePath) => {
 const loadParameters = (parametersPath) => {
     if (!parametersPath) return Promise.resolve({});
     return fs.readFile(parametersPath, 'utf8')
-        .then(paramsData => yaml.safeLoad(paramsData));
+        .then(paramsData => yaml.safeLoad(paramsData))
+        .catch((e) => {
+            console.error(`Failed to load the parameters file:\n${e.stack}`);
+            process.exit(1);
+        });
 };
 
 const loadTemplateAndParameters = (templatePath, parametersPath) => Promise.all([
@@ -47,18 +51,17 @@ const validateTemplate = templatePath => loadTemplate(templatePath)
 const templateToParametersSchema = templatePath => loadTemplate(templatePath)
     .then((tmpl) => {
         console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
+    })
+    .catch((e) => {
+        console.error(`Failed to generate schema:\n${e.stack}`);
+        process.exit(1);
     });
 
 const validateParamData = (tmpl, parameters) => {
     try {
         tmpl.validateParameters(parameters);
     } catch (e) {
-        console.error('parameters failed validation:');
-        if (e.stack) {
-            console.error(e.stack);
-        } else {
-            console.error(e);
-        }
+        console.error(e.stack);
         process.exit(1);
     }
 };
@@ -66,12 +69,20 @@ const validateParamData = (tmpl, parameters) => {
 const validateParameters = (templatePath, parametersPath) => loadTemplateAndParameters(templatePath, parametersPath)
     .then(([tmpl, parameters]) => {
         validateParamData(tmpl, parameters);
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        process.exit(1);
     });
 
 const renderTemplate = (templatePath, parametersPath) => loadTemplateAndParameters(templatePath, parametersPath)
     .then(([tmpl, parameters]) => {
         validateParamData(tmpl, parameters);
         console.log(tmpl.render(parameters));
+    })
+    .catch((e) => {
+        console.error(`Failed to render template:\n${e.stack}`);
+        process.exit(1);
     });
 
 const validateTemplateSet = (tsPath) => {
