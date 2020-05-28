@@ -1,3 +1,7 @@
+#v0.5.1
+## Fixed
+* Bad reference to atg-storage
+
 # v0.5
 ## Added
 * CLI: Support YAML for parameter files

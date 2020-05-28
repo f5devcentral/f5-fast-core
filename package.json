@@ -7,7 +7,7 @@
   "description": "The core module for F5 Application Services Templates",
   "scripts": {
     "test": "mocha --recursive \"./test/*.js\"",
-    "lint": "eslint lib test cli.js --ignore-pattern jsoneditor.js",
+    "lint": "eslint lib test index.js cli.js --ignore-pattern jsoneditor.js",
     "buildbin": "./scripts/build-fastbin.sh",
     "coverage": "nyc npm test"
   },

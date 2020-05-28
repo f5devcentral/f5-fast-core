@@ -1,6 +1,6 @@
 'use strict';
 
-const dataStores = require('atg-storage');
+const dataStores = require('@f5devcentral/atg-storage');
 
 const FsSchemaProvider = require('./lib/schema_provider').FsSchemaProvider;
 const { FsTemplateProvider, DataStoreTemplateProvider } = require('./lib/template_provider');
