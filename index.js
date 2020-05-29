@@ -4,7 +4,7 @@ const dataStores = require('@f5devcentral/atg-storage');
 
 const FsSchemaProvider = require('./lib/schema_provider').FsSchemaProvider;
 const { FsTemplateProvider, DataStoreTemplateProvider } = require('./lib/template_provider');
-const Template = require('./lib/template').Template;
+const { Template, mergeStrategies } = require('./lib/template');
 const httpUtils = require('./lib/http_utils');
 const { NullDriver, AS3Driver, AS3DriverConstantsKey } = require('./lib/drivers');
 const guiUtils = require('./lib/gui_utils');
@@ -15,6 +15,7 @@ module.exports = {
     FsTemplateProvider,
     DataStoreTemplateProvider,
     Template,
+    mergeStrategies,
     httpUtils,
     NullDriver,
     AS3Driver,

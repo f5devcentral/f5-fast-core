@@ -1,3 +1,11 @@
+# v0.6.0
+## Added
+* Expose Template mergeStrategies in index.js
+
+## Fixed
+
+## Changed
+
 # v0.5.1
 ## Fixed
 * Bad reference to atg-storage
