@@ -1,6 +1,7 @@
 # v0.6.0
 ## Added
 * Expose Template mergeStrategies in index.js
+* Cache GET requests to AS3 declare endpoint
 
 ## Fixed
 
