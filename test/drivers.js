@@ -266,7 +266,7 @@ describe('AS3 Driver tests', function () {
     });
     it('get_tasks', function () {
         const driver = new AS3Driver();
-        driver._task_ids.unshift('foo1');
+        driver._task_ids.foo1 = `${AS3DriverConstantsKey}-delete-tenantName-appName-0-0-0-0-0`;
         nock(host)
             .get(as3TaskEp)
             .reply(200, {
@@ -292,7 +292,7 @@ describe('AS3 Driver tests', function () {
                             tenant: 'tenantName'
                         }],
                         declaration: Object.assign({}, as3WithApp, {
-                            id: `${AS3DriverConstantsKey}-tenantName-appName-0`
+                            id: `${AS3DriverConstantsKey}-update-tenantName-appName-0-0-0-0-0`
                         })
                     },
                     {
@@ -307,13 +307,14 @@ describe('AS3 Driver tests', function () {
             });
         return assert.becomes(driver.getTasks(), [
             {
-                application: '',
+                application: 'appName',
                 id: 'foo1',
                 code: 200,
                 message: 'in progress',
                 name: '',
                 parameters: {},
-                tenant: ''
+                tenant: 'tenantName',
+                operation: 'delete'
             },
             {
                 application: 'appName',
@@ -322,7 +323,8 @@ describe('AS3 Driver tests', function () {
                 message: 'success',
                 name: appMetadata.template,
                 parameters: appMetadata.view,
-                tenant: 'tenantName'
+                tenant: 'tenantName',
+                operation: 'update'
             }
         ]);
     });
