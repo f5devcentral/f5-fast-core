@@ -56,19 +56,24 @@ describe('schema provider tests', function () {
     });
 
     describe('DataStoreSchemaProvider', function () {
-        runSharedTests(() => {
-            const datastore = new StorageMemory({
-                test: {
-                    templates: {},
-                    schemas: fs.readdirSync(`${schemasPath}`).filter(x => x.endsWith('.json')).reduce(
-                        (acc, fname) => {
-                            acc[fname.slice(0, -5)] = fs.readFileSync(`${schemasPath}/${fname}`, { encoding: 'utf8' });
-                            return acc;
-                        }, {}
-                    )
-                }
-            });
-            return new DataStoreSchemaProvider(datastore, 'test');
+        const createDataStore = () => new StorageMemory({
+            test: {
+                templates: {},
+                schemas: fs.readdirSync(`${schemasPath}`).filter(x => x.endsWith('.json')).reduce(
+                    (acc, fname) => {
+                        acc[fname.slice(0, -5)] = fs.readFileSync(`${schemasPath}/${fname}`, { encoding: 'utf8' });
+                        return acc;
+                    }, {}
+                )
+            }
+        });
+        runSharedTests(() => new DataStoreSchemaProvider(createDataStore(), 'test'));
+        it('bad_ts_name', function () {
+            const provider = new DataStoreSchemaProvider(createDataStore(), 'does_not_exist');
+            return Promise.all([
+                assert.isRejected(provider.list()),
+                assert.isRejected(provider.fetch('f5'))
+            ]);
         });
     });
 });
