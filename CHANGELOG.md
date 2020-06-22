@@ -2,10 +2,15 @@
 ## Added
 * Expose Template mergeStrategies in index.js
 * Cache GET requests to AS3 declare endpoint
+* Add "responses" information from AS3 tasks to FAST tasks
+* Add operation information (e.g., update vs delete) to FAST tasks
+* Merge definitions and default parameters from base templates
 
 ## Fixed
+* Missing type schema when merging templates
 
 ## Changed
+* Move empty-string checks out of template merge strategies
 
 # v0.5.1
 ## Fixed
