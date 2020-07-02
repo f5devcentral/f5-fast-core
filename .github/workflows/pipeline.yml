@@ -19,6 +19,7 @@ jobs:
     - run: npm run coverage
   audit:
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
       matrix:
         node-version: [12.x]
