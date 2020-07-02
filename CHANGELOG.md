@@ -5,6 +5,7 @@
 * Add "responses" information from AS3 tasks to FAST tasks
 * Add operation information (e.g., update vs delete) to FAST tasks
 * Merge definitions and default parameters from base templates
+* Save additional, top-level properties found on YAML templates
 
 ## Fixed
 * Missing type schema when merging templates
