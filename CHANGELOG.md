@@ -12,6 +12,7 @@
 
 ## Changed
 * Move empty-string checks out of template merge strategies
+* Remove AS3Driver
 
 # v0.5.1
 ## Fixed
