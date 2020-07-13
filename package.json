@@ -49,14 +49,14 @@
     ]
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.1",
+    "@apidevtools/json-schema-ref-parser": "^9.0.3",
     "@f5devcentral/atg-storage": "^0.1.0",
-    "ajv": "^6.12.2",
-    "archiver": "^4.0.1",
+    "ajv": "^6.12.3",
+    "archiver": "^4.0.2",
     "deepmerge": "^4.2.2",
     "js-yaml": "^3.14.0",
     "mustache": "^4.0.1",
     "uuid": "^7.0.3",
-    "yargs": "^15.4.0"
+    "yargs": "^15.4.1"
   }
 }
