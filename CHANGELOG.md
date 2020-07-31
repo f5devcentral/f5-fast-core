@@ -3,6 +3,7 @@
 
 ## Fixed
 * Improve guiUtils.filterExtraProperties() when using template merging
+* guiUtils: Improve form render order when using allOf
 
 ## Changed
 
