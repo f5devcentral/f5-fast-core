@@ -1,3 +1,11 @@
+# v0.7.0
+## Added
+
+## Fixed
+* Improve guiUtils.filterExtraProperties() when using template merging
+
+## Changed
+
 # v0.6.0
 ## Added
 * Expose Template mergeStrategies in index.js
