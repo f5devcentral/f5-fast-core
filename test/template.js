@@ -669,6 +669,27 @@ describe('Template class tests', function () {
                     assert.strictEqual(rendered.trim(), 'foo');
                 }));
     });
+    it('fetch_http_url_obj', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url:
+                      host: example.com
+                      path: /resource
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .get('/resource')
+            .reply(200, 'foo');
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => tmpl.fetchHttp())
+            .then((httpView) => {
+                console.log(JSON.stringify(httpView, null, 2));
+                assert.strictEqual(httpView.var, 'foo');
+            });
+    });
     it('fetch_http_with_data', function () {
         const ymldata = `
             definitions:
