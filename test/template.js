@@ -684,7 +684,7 @@ describe('Template class tests', function () {
             .get('/resource')
             .reply(200, 'foo');
         return Template.loadYaml(ymldata)
-            .then((tmpl) => tmpl.fetchHttp())
+            .then(tmpl => tmpl.fetchHttp())
             .then((httpView) => {
                 console.log(JSON.stringify(httpView, null, 2));
                 assert.strictEqual(httpView.var, 'foo');

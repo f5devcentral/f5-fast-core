@@ -1,6 +1,7 @@
 # v0.7.0
 ## Added
 * Add jsdoc-style docs to classes mentioned in the README
+* Add option to get variable values from HTTP requests
 
 ## Fixed
 * Improve guiUtils.filterExtraProperties() when using template merging
