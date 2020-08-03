@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const assert = require('assert').strict;
+const nock = require('nock');
 
 const FsSchemaProvider = require('../lib/schema_provider').FsSchemaProvider;
 const Template = require('../lib/template').Template;
@@ -29,6 +30,9 @@ const mstWithTypes = `{
 `;
 
 describe('Template class tests', function () {
+    afterEach(function () {
+        nock.cleanAll();
+    });
     it('construct', function () {
         const tmpl = new Template();
         assert.ok(tmpl);
@@ -638,5 +642,31 @@ describe('Template class tests', function () {
                 console.log(e);
                 assert.match(e.message, /does not reference a known partial/);
             });
+    });
+    it('fetch_http_basic', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url: http://example.com/resource
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .get('/resource')
+            .reply(200, 'foo')
+            .get('/resource')
+            .reply(200, '"foo"');
+        return Template.loadYaml(ymldata)
+            .then(tmpl => Promise.resolve()
+                .then(() => tmpl.fetchHttp())
+                .then((httpView) => {
+                    console.log(JSON.stringify(httpView, null, 2));
+                    assert.strictEqual(httpView.var, 'foo');
+                })
+                .then(() => tmpl.fetchAndRender())
+                .then((rendered) => {
+                    assert.strictEqual(rendered.trim(), 'foo');
+                }));
     });
 });
