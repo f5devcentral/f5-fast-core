@@ -669,4 +669,51 @@ describe('Template class tests', function () {
                     assert.strictEqual(rendered.trim(), 'foo');
                 }));
     });
+    it('fetch_http_with_data', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url: http://example.com/resource
+                    pathQuery: $.foo
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .persist()
+            .get('/resource')
+            .reply(200, { foo: 'bar' });
+        return Template.loadYaml(ymldata)
+            .then(tmpl => Promise.resolve()
+                .then(() => tmpl.fetchHttp())
+                .then((httpView) => {
+                    console.log(JSON.stringify(httpView, null, 2));
+                    assert.strictEqual(httpView.var, 'bar');
+                })
+                .then(() => tmpl.fetchAndRender())
+                .then((rendered) => {
+                    assert.strictEqual(rendered.trim(), 'bar');
+                }));
+    });
+    it('fetch_http_bad_query', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url: http://example.com/resource
+                    pathQuery: $.bar
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .persist()
+            .get('/resource')
+            .reply(200, { foo: 'bar' });
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.fetchHttp())
+            .then((httpView) => {
+                console.log(JSON.stringify(httpView, null, 2));
+                assert.strictEqual(httpView.var, undefined);
+            });
+    });
 });
