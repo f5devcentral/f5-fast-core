@@ -737,4 +737,42 @@ describe('Template class tests', function () {
                 assert.strictEqual(httpView.var, undefined);
             });
     });
+    it('forward_http', function () {
+        const ymldata = `
+            httpForward:
+                url: http://example.com/resource
+            definitions:
+                var:
+                    default: foo
+            template: |
+                {{var}}
+        `;
+        let posted = false;
+        nock('http://example.com/')
+            .post('/resource')
+            .reply(200, () => {
+                posted = true;
+                return '';
+            });
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.forwardHttp())
+            .then(() => {
+                assert(posted, 'failed to post the rendered result');
+            });
+    });
+    it('forward_http_missing', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    default: foo
+            template: |
+                {{var}}
+        `;
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.forwardHttp())
+            .catch((e) => {
+                console.log(e.message);
+                assert.match(e.message, /httpForward was not defined for this template/);
+            });
+    });
 });

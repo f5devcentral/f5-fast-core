@@ -2,6 +2,7 @@
 ## Added
 * Add jsdoc-style docs to classes mentioned in the README
 * Add option to get variable values from HTTP requests
+* Add Template.forwardHttp() to forward a rendered template result to an HTTP server
 
 ## Fixed
 * Improve guiUtils.filterExtraProperties() when using template merging
