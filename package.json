@@ -55,6 +55,7 @@
     "archiver": "^4.0.2",
     "deepmerge": "^4.2.2",
     "js-yaml": "^3.14.0",
+    "json-schema-merge-allof": "^0.7.0",
     "mustache": "^4.0.1",
     "uuid": "^7.0.3",
     "yargs": "^15.4.1"
