@@ -20,7 +20,15 @@ describe('GUI utils test', function () {
                 bool: { type: 'boolean' },
                 table: { type: 'array' },
                 str: { type: 'string' },
-                longstr: { type: 'string', format: 'text' }
+                longstr: { type: 'string', format: 'text' },
+                multiselect: {
+                    type: 'array',
+                    uniqueItems: true,
+                    items: {
+                        type: 'string',
+                        enum: ['val1', 'val2']
+                    }
+                }
             }
         };
         guiUtils.modSchemaForJSONEditor(schema);
@@ -28,6 +36,7 @@ describe('GUI utils test', function () {
         assert.strictEqual(schema.properties.table.format, 'table');
         assert.strictEqual(schema.properties.str.format, undefined);
         assert.strictEqual(schema.properties.longstr.format, 'textarea');
+        assert.strictEqual(schema.properties.multiselect.format, 'select');
     });
     it('add_deps', function () {
         const schema = {

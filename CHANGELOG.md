@@ -6,6 +6,7 @@
 * guiUtils: Improve form render order when using allOf
 
 ## Changed
+* guiUtils: Use JSON Editor 'select' format for arrays of unique enum items
 
 # v0.6.0
 ## Added
