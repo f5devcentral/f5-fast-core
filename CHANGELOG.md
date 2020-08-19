@@ -1,5 +1,6 @@
 # v0.7.0
 ## Added
+* Add jsdoc-style docs to classes mentioned in the README
 
 ## Fixed
 * Improve guiUtils.filterExtraProperties() when using template merging
@@ -7,6 +8,8 @@
 
 ## Changed
 * guiUtils: Use JSON Editor 'select' format for arrays of unique enum items
+* guiUtils: Flatten allOf schema in modSchemaForJSONEditor
+* template: Return an empty array instead of undefined when transforming an undefined array
 
 # v0.6.0
 ## Added
