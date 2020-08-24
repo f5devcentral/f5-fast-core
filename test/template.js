@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const assert = require('assert').strict;
+const nock = require('nock');
 
 const FsSchemaProvider = require('../lib/schema_provider').FsSchemaProvider;
 const Template = require('../lib/template').Template;
@@ -29,6 +30,9 @@ const mstWithTypes = `{
 `;
 
 describe('Template class tests', function () {
+    afterEach(function () {
+        nock.cleanAll();
+    });
     it('construct', function () {
         const tmpl = new Template();
         assert.ok(tmpl);
@@ -637,6 +641,138 @@ describe('Template class tests', function () {
             .catch((e) => {
                 console.log(e);
                 assert.match(e.message, /does not reference a known partial/);
+            });
+    });
+    it('fetch_http_basic', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url: http://example.com/resource
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .get('/resource')
+            .reply(200, 'foo')
+            .get('/resource')
+            .reply(200, '"foo"');
+        return Template.loadYaml(ymldata)
+            .then(tmpl => Promise.resolve()
+                .then(() => tmpl.fetchHttp())
+                .then((httpView) => {
+                    console.log(JSON.stringify(httpView, null, 2));
+                    assert.strictEqual(httpView.var, 'foo');
+                })
+                .then(() => tmpl.fetchAndRender())
+                .then((rendered) => {
+                    assert.strictEqual(rendered.trim(), 'foo');
+                }));
+    });
+    it('fetch_http_url_obj', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url:
+                      host: example.com
+                      path: /resource
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .get('/resource')
+            .reply(200, 'foo');
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.fetchHttp())
+            .then((httpView) => {
+                console.log(JSON.stringify(httpView, null, 2));
+                assert.strictEqual(httpView.var, 'foo');
+            });
+    });
+    it('fetch_http_with_data', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url: http://example.com/resource
+                    pathQuery: $.foo
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .persist()
+            .get('/resource')
+            .reply(200, { foo: 'bar' });
+        return Template.loadYaml(ymldata)
+            .then(tmpl => Promise.resolve()
+                .then(() => tmpl.fetchHttp())
+                .then((httpView) => {
+                    console.log(JSON.stringify(httpView, null, 2));
+                    assert.strictEqual(httpView.var, 'bar');
+                })
+                .then(() => tmpl.fetchAndRender())
+                .then((rendered) => {
+                    assert.strictEqual(rendered.trim(), 'bar');
+                }));
+    });
+    it('fetch_http_bad_query', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    url: http://example.com/resource
+                    pathQuery: $.bar
+            template: |
+                {{var}}
+        `;
+
+        nock('http://example.com/')
+            .persist()
+            .get('/resource')
+            .reply(200, { foo: 'bar' });
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.fetchHttp())
+            .then((httpView) => {
+                console.log(JSON.stringify(httpView, null, 2));
+                assert.strictEqual(httpView.var, undefined);
+            });
+    });
+    it('forward_http', function () {
+        const ymldata = `
+            httpForward:
+                url: http://example.com/resource
+            definitions:
+                var:
+                    default: foo
+            template: |
+                {{var}}
+        `;
+        let posted = false;
+        nock('http://example.com/')
+            .post('/resource')
+            .reply(200, () => {
+                posted = true;
+                return '';
+            });
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.forwardHttp())
+            .then(() => {
+                assert(posted, 'failed to post the rendered result');
+            });
+    });
+    it('forward_http_missing', function () {
+        const ymldata = `
+            definitions:
+                var:
+                    default: foo
+            template: |
+                {{var}}
+        `;
+        return Template.loadYaml(ymldata)
+            .then(tmpl => tmpl.forwardHttp())
+            .catch((e) => {
+                console.log(e.message);
+                assert.match(e.message, /httpForward was not defined for this template/);
             });
     });
 });
