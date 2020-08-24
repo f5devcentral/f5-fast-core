@@ -49,9 +49,9 @@
     ]
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.3",
+    "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "@f5devcentral/atg-storage": "^0.1.0",
-    "ajv": "^6.12.3",
+    "ajv": "^6.12.4",
     "archiver": "^4.0.2",
     "deepmerge": "^4.2.2",
     "js-yaml": "^3.14.0",
