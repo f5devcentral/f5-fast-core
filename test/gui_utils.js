@@ -81,6 +81,9 @@ describe('GUI utils test', function () {
         // Order fixes
         assert.strictEqual(schema.properties.foo.propertyOrder, 1100);
         assert.strictEqual(schema.properties.showFirst.propertyOrder, 100);
+
+        // Flatten allOf
+        assert.strictEqual(schema.allOf, undefined);
     });
     it('filter_extra_props', function () {
         const schema = {
