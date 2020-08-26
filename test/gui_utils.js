@@ -58,6 +58,30 @@ describe('GUI utils test', function () {
         assert.deepStrictEqual(schema.properties.foo.options.dependencies, { useFoo: true, existingFoo: false });
         assert.deepStrictEqual(schema.properties.bar.options.dependencies, { skipBar: false });
     });
+    it('all_of_fixes', function () {
+        const schema = {
+            properties: {
+                showFirst: {
+                    type: 'string',
+                    propertyOrder: 100
+                },
+                foo: { type: 'string' }
+            },
+            allOf: [
+                {
+                    properties: {
+                        baz: { type: 'integer' }
+                    }
+                }
+            ]
+        };
+        guiUtils.modSchemaForJSONEditor(schema);
+        console.log(JSON.stringify(schema, null, 2));
+
+        // Order fixes
+        assert.strictEqual(schema.properties.foo.propertyOrder, 1100);
+        assert.strictEqual(schema.properties.showFirst.propertyOrder, 100);
+    });
     it('filter_extra_props', function () {
         const schema = {
             properties: {
@@ -70,6 +94,29 @@ describe('GUI utils test', function () {
         };
         const filteredView = guiUtils.filterExtraProperties(view, schema);
         assert.deepStrictEqual(filteredView, { foo: 'bar' });
+
+        assert.deepStrictEqual(guiUtils.filterExtraProperties(view, {}), {});
+    });
+    it('filter_extra_props_all_of', function () {
+        const schema = {
+            properties: {
+                foo: { type: 'string' }
+            },
+            allOf: [
+                {
+                    properties: {
+                        baz: { type: 'integer' }
+                    }
+                }
+            ]
+        };
+        const view = {
+            foo: 'bar',
+            baz: 0,
+            noshow: ''
+        };
+        const filteredView = guiUtils.filterExtraProperties(view, schema);
+        assert.deepStrictEqual(filteredView, { foo: 'bar', baz: 0 });
 
         assert.deepStrictEqual(guiUtils.filterExtraProperties(view, {}), {});
     });
