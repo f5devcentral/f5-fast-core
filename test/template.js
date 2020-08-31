@@ -136,7 +136,6 @@ describe('Template class tests', function () {
                     type: 'array',
                     skip_xform: true,
                     items: {
-                        default: '',
                         type: 'string'
                     }
                 },
@@ -210,8 +209,16 @@ describe('Template class tests', function () {
             });
     });
     it('schema_sections_dot_array', function () {
-        const mstdata = '{{#section}}{{.}}{{/section}}';
-        return Template.loadMst(mstdata)
+        const ymldata = `
+            definitions:
+                section:
+                    type: array
+                    items:
+                        enumFromBigip: ltm/rule
+            template: |
+                {{#section}}{{.}}{{/section}}
+        `;
+        return Template.loadYaml(ymldata)
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
                 console.log(JSON.stringify(schema, null, 2));
@@ -226,6 +233,7 @@ describe('Template class tests', function () {
                 assert.ok(sectionDef);
                 assert.strictEqual(sectionDef.type, 'array');
                 assert.strictEqual(sectionDef.items.type, 'string');
+                assert.ok(sectionDef.items.enumFromBigip);
             });
     });
     it('schema_sections_boolean', function () {
