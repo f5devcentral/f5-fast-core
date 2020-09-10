@@ -1,3 +1,12 @@
+# v0.8.0
+## Added
+* Support extended user types (e.g., "var:lib:type") for sections and partials
+
+## Fixed
+* template: Fix using full Mustache variable names (e.g., "var:lib:type") for dependencies and requires
+
+## Changed
+
 # v0.7.0
 ## Added
 * Add jsdoc-style docs to classes mentioned in the README
