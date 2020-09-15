@@ -97,7 +97,7 @@ const fast = require('@f5devcentral/f5-fast-core');
 
 const mstdata = '{{message}}';
 
-fast.Template.loadMst(ymldata)
+fast.Template.loadMst(mstdata)
     .then((template) => {
         console.log(template.getParametersSchema());
         console.log(template.render({message: "Hello world!"}));
