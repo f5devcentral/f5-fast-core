@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "templateSchema",
+  "title": "tempateSchema schema definition",
+  "oneOf": [
+    {
+      "allOf": [
+        {
+          "$ref": "http://json-schema.org/draft-07/schema#"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "view": {
+              "type": "object",
+              "description": "a sample view to render the template with"
+            },
+            "template": {
+              "type": "string",
+              "format": "mustache",
+              "description": "a mustache template component"
+            },
+            "definitions": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#"
+              }
+            },
+            "allOf": {
+              "type": "array",
+              "items": {
+                "$ref": "#"
+              }
+            },
+            "oneOf": {
+              "type": "array",
+              "items": {
+                "$ref": "#"
+              }
+            },
+            "anyOf": {
+              "type": "array",
+              "items": {
+                "$ref": "#"
+              }
+            },
+            "contentType": {
+              "type": "string",
+              "description": "MIME type of the rendered template output",
+              "default": "text/plain"
+            }
+          },
+          "required": [
+            "template"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "format": "mustache"
+    }
+  ],
+  "description": "# templateSchema\n\nProvide a hiearchy of template snippets using mustache style templates.\nthe system will digest and compile the mustache snippets and generate JSON\nschema that represents the input schema to the templates\n\nHTML Templating Example:\n\\`\\`\\`yaml\n  view:\n    message: Hello!\n  definitions:\n    body:\n      template:\n        <body>\n          <h1>{{message}}</h1>\n        </body>\n  template: |\n    <html>\n      {{> body}}\n    </html>\n\\`\\`\\`\n\nA templateSchema object is any object that passes this schema. In short,\nthese objects are valid json schema with a required 'template' property that\ncontains a mustache template.\n\nThe framework mainly acts using the follow three propeties:\n\ntemplate: the base template for this templateSchema object\ndefinitions: a dictionary of other templateSchema objects that can be used\n  as partials in the top level template\nview: a view for the template will be rendered with\n\nWhen the system digests the schema, it will parse the template and any\npartials specified in the definitions object, and generate a top level schema\nof properties required to render the template.\n\nThe view object is optional, and can be used to provide an example or defaults\nfor the template.\n\nThe top level schema generated from parsing the mustache template will be used\nto validate the view object. This schema can then be used to validate other\nviews used to render the template.\n"
+}
