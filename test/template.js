@@ -372,6 +372,30 @@ describe('Template class tests', function () {
                 assert.strictEqual(tmpl.render(), reference);
             });
     });
+    it('render_section_with_partial', function () {
+        const ymldata = `
+            parameters:
+                section:
+                    - numb: 1
+                    - numb: 3
+                    - numb: 5
+                    - numb: 7
+            definitions:
+                numbpartial:
+                    template: |
+                        numb={{numb::integer}}
+                arraypartial:
+                    template: |
+                        arr={{arr::array}}
+            template: |
+                {{#section}}{{> numbpartial}}{{/section}}
+        `;
+        const reference = 'numb=1\nnumb=3\nnumb=5\nnumb=7\n';
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                assert.strictEqual(tmpl.render(), reference);
+            });
+    });
     it('render_empty_template', function () {
         const mstdata = '';
         const parameters = {};
