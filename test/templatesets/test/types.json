@@ -20,6 +20,9 @@
             {"$ref": "#/definitions/ipv4_addr"},
             {"$ref": "#/definitions/ipv6_addr"}
         ]
+    },
+    "bool_section": {
+        "type": "boolean"
     }
   }
 }

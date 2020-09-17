@@ -372,6 +372,20 @@ describe('Template class tests', function () {
                 assert.strictEqual(tmpl.render(), reference);
             });
     });
+    it('render_section_with_type', function () {
+        const schemaProvider = new FsSchemaProvider(templatesPath);
+        const mstdata = '{{#section:types:bool_section}}{{var}}{{/section:types:bool_section}}';
+        const view = {
+            section: true,
+            var: 'foo'
+        };
+        const reference = 'foo';
+
+        return Template.loadMst(mstdata, schemaProvider)
+            .then((tmpl) => {
+                assert.strictEqual(tmpl.render(view), reference);
+            });
+    });
     it('render_section_with_partial', function () {
         const ymldata = `
             parameters:
