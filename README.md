@@ -23,9 +23,7 @@ To install this module run:
 npm install @f5devcentral/f5-fast-core
 ```
 
-## Usage
-
-### CLI
+## CLI
 
 A command line interface is provided via a `fast` binary.
 The help text is provided below and also accessed via `fast --help`:
@@ -61,7 +59,9 @@ For example:
 ./cli.js render path/to/template
 ```
 
-### Module
+## Module API
+
+### Simple Loading
 
 Below is a basic example for loading a template without any additional type schema:
 
@@ -104,6 +104,8 @@ fast.Template.loadMst(mstdata)
     });
 ```
 
+### Loading with Type Schema
+
 To support user-defined types, a `SchemaProvider` must be used.
 The `FsSchemaProvider` can be used to load schema from disk:
 
@@ -121,15 +123,17 @@ fast.Template.loadMst(mstdata, schemaProvider)
     });
 ```
 
+### Using a TemplateProvider
+
 A higher-level API is available for loading templates via `TemplateProvider` classes.
-These classes will handle calling the correct load function (`Template.loadYaml()` vs `Template.loadMst()`) and can also handle schemas.
-For example, to load "templates sets" (a collection of template source files) from a given directory, the `FsTemplateProvider` class can be used:
+These classes will handle calling the correct load function (`Template.loadYaml()` vs `Template.loadMst()`) and can also automatically handle additional schema files.
+For example, to load "templates sets" (a directory containing template files) from a given directory, the `FsTemplateProvider` class can be used:
 
 ```javascript
 const fast = require('@f5devcentral/f5-fast-core');
 
-const templatesPath = '/path/to/templatesdir';
-const templateProvider = new fast.FsTemplateProvider(templatesPath);
+const templateSetsPath = '/path/to/templateSetsDir';
+const templateProvider = new fast.FsTemplateProvider(templateSetsPath);
 
 templateProvider.fetch('templateSetName/templateName')
     .then((template) => {
@@ -143,15 +147,10 @@ templateProvider.fetch('templateSetName/templateName')
 
 ## Development
 
-`npm` commands should be run in the core subdirectory, not at the top-level.
 * To check for lint errors run `npm run lint` 
 * To run unit tests use `npm test`
 
 Both of these are run as part of the CI pipeline for this repo.
-
-## Documentation
-
-For more information about FAST, see [FAST Documentation](https://clouddocs.f5.com/products/extensions/f5-appsvcs-templates/latest/)
 
 ## License
 
