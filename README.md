@@ -104,6 +104,25 @@ fast.Template.loadMst(mstdata)
     });
 ```
 
+If a `Template` has been serialized to JSON (e.g., to send in an HTTP request), it can be deserialized with `Template.fromJson()`:
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const yamldata = `
+    template: |
+        {{message}}
+`;
+
+fast.Template.loadYaml(ymldata)
+    .then(template => JSON.stringify(template))
+    .then(jsonData => template.fromJson(jsonData))
+    .then((template) => {
+        console.log(template.getParametersSchema());
+        console.log(template.render({message: "Hello world!"}));
+    });
+```
+
 ### Loading with Type Schema
 
 To support user-defined types, a `SchemaProvider` must be used.
