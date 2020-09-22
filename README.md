@@ -69,7 +69,7 @@ Below is a basic example for loading a template without any additional type sche
 const fast = require('@f5devcentral/f5-fast-core');
 
 const ymldata = `
-    view:
+    parameters:
       message: Hello!
     definitions:
       body:
@@ -142,6 +142,54 @@ templateProvider.fetch('templateSetName/templateName')
             var: "value",
             boolVar: false
         }));
+    });
+```
+
+### HTTP Fetch
+
+To resolve external URLs in templates, a `Template.fetchHttp()` is available.
+This will take any definition with a `url` property, resolve it, and return an object of the results.
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const ymldata = `
+    definitions:
+        var:
+            url: http://example.com/resource
+            pathQuery: $.foo
+    template: |
+        {{var}}
+`;
+
+fast.Template.loadYaml(ymldata)
+    .then(template => Promise.all[(
+        Promise.resolve(template),
+        () => template.fetchHttp()
+    )])
+    .then(([template, httpParams]) => {
+        console.log(template.render(httpParams));
+    });
+```
+
+A `Template.fetchAndRender()` convienence function is also available to do fetchHttp() and render() in a single function call.
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const ymldata = `
+    definitions:
+        var:
+            url: http://example.com/resource
+            pathQuery: $.foo
+    template: |
+        {{var}}
+`;
+
+fast.Template.loadYaml(ymldata)
+    .then(template => template.fetchAndRender())
+    .then((rendered) => {
+        console.log(rendered);
     });
 ```
 
