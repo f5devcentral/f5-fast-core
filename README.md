@@ -172,7 +172,7 @@ fast.Template.loadYaml(ymldata)
     });
 ```
 
-A `Template.fetchAndRender()` convienence function is also available to do fetchHttp() and render() in a single function call.
+A `Template.fetchAndRender()` convenience function is also available to do fetchHttp() and render() in a single function call.
 
 ```javascript
 const fast = require('@f5devcentral/f5-fast-core');
@@ -191,6 +191,33 @@ fast.Template.loadYaml(ymldata)
     .then((rendered) => {
         console.log(rendered);
     });
+```
+
+### HTTP Forward
+
+It is common to want to submit the rendered template result to an HTTP endpoint.
+`f5-fast-core` makes this simpler with `Template.forwardHttp()`.
+This function will:
+
+* Resolve external URLs with `Template.fetchHttp()`
+* Render the template result
+* Forward the rendered result as a `POST` (by default) to the endpoint defined by the template's `httpForward` property
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const ymldata = `
+    httpForward:
+        url: http://example.com/resource
+    definitions:
+        var:
+            default: foo
+    template: |
+        {{var}}
+`;
+
+fast.Template..loadYaml(ymldata)
+    .then(template => template.forwardHttp()); // POST "foo" to http://example.com/resource
 ```
 
 ## Development
