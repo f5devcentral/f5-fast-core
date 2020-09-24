@@ -4,8 +4,13 @@
 
 ## Fixed
 * template: Fix using full Mustache variable names (e.g., "var:lib:type") for dependencies and requires
+* guiUtils: Additional fixes for allOf schema in modSchemaForJSONEditor()
+* Fix sections with a dot item overriding user definitions
+* Add missing doc strings for  HTTP fetching and forwarding functions 
+* guiUtils: Do not error if a dependency is missing from the properties
 
 ## Changed
+* cli: Run fetchHttp() as part of render command
 
 # v0.7.0
 ## Added
