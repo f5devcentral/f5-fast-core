@@ -76,6 +76,11 @@ const validateParameters = (templatePath, parametersPath) => loadTemplateAndPara
     });
 
 const renderTemplate = (templatePath, parametersPath) => loadTemplateAndParameters(templatePath, parametersPath)
+    .then(([tmpl, parameters]) => Promise.all([
+        Promise.resolve(tmpl),
+        tmpl.fetchHttp()
+            .then(httpParams => Object.assign({}, parameters, httpParams))
+    ]))
     .then(([tmpl, parameters]) => {
         validateParamData(tmpl, parameters);
         console.log(tmpl.render(parameters));
