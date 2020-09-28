@@ -48,6 +48,26 @@
               "type": "string",
               "description": "MIME type of the rendered template output",
               "default": "text/plain"
+            },
+            "httpForward": {
+              "properties": {
+                "url": {
+                  "oneOf": [
+                    { "type": "string" },
+                    {
+                      "type": "object",
+                      "description": "matches Node http.request() options object (https://nodejs.org/api/http.html#http_http_request_options_callback)",
+                      "properties": {
+                        "host": { "type": "string" },
+                        "path": { "type": "string" }
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "url"
+              ]
             }
           },
           "required": [
