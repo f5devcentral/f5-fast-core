@@ -15,6 +15,7 @@ module.exports = {
     DataStoreTemplateProvider,
     Template,
     mergeStrategies,
+    postProcessStrategies,
     httpUtils,
     guiUtils,
     dataStores,
