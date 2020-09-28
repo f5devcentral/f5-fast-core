@@ -509,6 +509,33 @@ describe('Template class tests', function () {
                 assert.strictEqual(rendered, reference);
             });
     });
+    it('render_remove_dangling_commas', function () {
+        const yamldata = `
+            contentType: application/json
+            parameters:
+                list:
+                    - foo
+                    - bar
+            template: |
+                {
+                    "list": [
+                    {{#list}}
+                        "{{ . }}",
+                    {{/list}}
+                    ]
+                }
+            `;
+        return Promise.resolve()
+            .then(() => Template.loadYaml(yamldata))
+            .then((tmpl) => {
+                const rendered = tmpl.render();
+                const parsed = JSON.parse(rendered);
+                assert.deepStrictEqual(parsed.list, [
+                    'foo',
+                    'bar'
+                ]);
+            });
+    });
     it('schema_nested_sections', function () {
         const ymldata = `
             definitions:
