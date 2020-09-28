@@ -123,6 +123,21 @@ fast.Template.loadYaml(ymldata)
     });
 ```
 
+`Template` does not provide a mechanism for loading a template from a file and, instead, needs to be paired with something like Node's `fs` module:
+
+```javascript
+const fs = require('fs');
+const fast = require('@f5devcentral/f5-fast-core');
+
+const yamldata = fs.readFileSync('path/to/file', 'utf8');
+
+fast.Template.loadYaml(ymldata)
+    .then((template) => {
+        console.log(template.getParametersSchema());
+        console.log(template.render({message: "Hello world!"}));
+    });
+```
+
 ### Loading with Type Schema
 
 To support user-defined types, a `SchemaProvider` must be used.
