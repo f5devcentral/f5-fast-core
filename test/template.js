@@ -536,6 +536,30 @@ describe('Template class tests', function () {
                 ]);
             });
     });
+    it('render_json_object', function () {
+        const yamldata = `
+            contentType: application/json
+            parameters:
+                foo:
+                    bar: 1
+                    baz: stringy
+            definitions:
+                foo:
+                    type: object
+            template: |
+                {{foo}}
+        `;
+        const reference = [
+            '{',
+            '  "bar": 1,',
+            '  "baz": "stringy"',
+            '}'
+        ].join('\n');
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                assert.strictEqual(tmpl.render(), reference);
+            });
+    });
     it('schema_nested_sections', function () {
         const ymldata = `
             definitions:
