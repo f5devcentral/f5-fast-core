@@ -68,7 +68,7 @@ Below is a basic example for loading a template without any additional type sche
 ```javascript
 const fast = require('@f5devcentral/f5-fast-core');
 
-const ymldata = `
+const yamldata = `
     parameters:
       message: Hello!
     definitions:
@@ -83,21 +83,7 @@ const ymldata = `
       </html>
 `;
 
-fast.Template.loadYaml(ymldata)
-    .then((template) => {
-        console.log(template.getParametersSchema());
-        console.log(template.render({message: "Hello world!"}));
-    });
-```
-
-In addition to `Template.loadYaml()`, a `Template` can be created from Mustache data using `Template.loadMst()`:
-
-```javascript
-const fast = require('@f5devcentral/f5-fast-core');
-
-const mstdata = '{{message}}';
-
-fast.Template.loadMst(mstdata)
+fast.Template.loadYaml(yamldata)
     .then((template) => {
         console.log(template.getParametersSchema());
         console.log(template.render({message: "Hello world!"}));
@@ -114,7 +100,7 @@ const yamldata = `
         {{message}}
 `;
 
-fast.Template.loadYaml(ymldata)
+fast.Template.loadYaml(yamldata)
     .then(template => JSON.stringify(template))
     .then(jsonData => template.fromJson(jsonData))
     .then((template) => {
@@ -131,7 +117,7 @@ const fast = require('@f5devcentral/f5-fast-core');
 
 const yamldata = fs.readFileSync('path/to/file', 'utf8');
 
-fast.Template.loadYaml(ymldata)
+fast.Template.loadYaml(yamldata)
     .then((template) => {
         console.log(template.getParametersSchema());
         console.log(template.render({message: "Hello world!"}));
@@ -148,9 +134,12 @@ const fast = require('@f5devcentral/f5-fast-core');
 
 const templatesPath = '/path/to/templatesdir'; // directory containing types.json
 const schemaProvider = new fast.FsSchemaProvider(templatesPath);
-const mstdata = '{{virtual_port:types:port}}';
+const yamldata = `
+    template: |
+        {{virtual_port:types:port}}
+`;
 
-fast.Template.loadMst(mstdata, schemaProvider)
+fast.Template.loadYaml(yamldata, schemaProvider)
     .then((template) => {
         console.log(template.getParametersSchema());
         console.log(template.render({virtual_port: 443});
@@ -187,7 +176,7 @@ This will take any definition with a `url` property, resolve it, and return an o
 ```javascript
 const fast = require('@f5devcentral/f5-fast-core');
 
-const ymldata = `
+const yamldata = `
     definitions:
         var:
             url: http://example.com/resource
@@ -196,7 +185,7 @@ const ymldata = `
         {{var}}
 `;
 
-fast.Template.loadYaml(ymldata)
+fast.Template.loadYaml(yamldata)
     .then(template => Promise.all[(
         Promise.resolve(template),
         () => template.fetchHttp()
@@ -211,7 +200,7 @@ A `Template.fetchAndRender()` convenience function is also available to do fetch
 ```javascript
 const fast = require('@f5devcentral/f5-fast-core');
 
-const ymldata = `
+const yamldata = `
     definitions:
         var:
             url: http://example.com/resource
@@ -220,7 +209,7 @@ const ymldata = `
         {{var}}
 `;
 
-fast.Template.loadYaml(ymldata)
+fast.Template.loadYaml(yamldata)
     .then(template => template.fetchAndRender())
     .then((rendered) => {
         console.log(rendered);
@@ -240,7 +229,7 @@ This function will:
 ```javascript
 const fast = require('@f5devcentral/f5-fast-core');
 
-const ymldata = `
+const yamldata = `
     httpForward:
         url: http://example.com/resource
     definitions:
@@ -250,7 +239,7 @@ const ymldata = `
         {{var}}
 `;
 
-fast.Template..loadYaml(ymldata)
+fast.Template..loadYaml(yamldata)
     .then(template => template.forwardHttp()); // POST "foo" to http://example.com/resource
 ```
 
