@@ -61,10 +61,7 @@ describe('GUI utils test', function () {
     it('all_of_fixes', function () {
         const schema = {
             properties: {
-                showFirst: {
-                    type: 'string',
-                    propertyOrder: 100
-                },
+                showFirst: { type: 'string' },
                 foo: { type: 'string' }
             },
             allOf: [
@@ -79,8 +76,9 @@ describe('GUI utils test', function () {
         console.log(JSON.stringify(schema, null, 2));
 
         // Order fixes
-        assert.strictEqual(schema.properties.foo.propertyOrder, 1100);
-        assert.strictEqual(schema.properties.showFirst.propertyOrder, 100);
+        assert.strictEqual(schema.properties.baz.propertyOrder, 0);
+        assert.strictEqual(schema.properties.showFirst.propertyOrder, 1);
+        assert.strictEqual(schema.properties.foo.propertyOrder, 2);
 
         // Flatten allOf
         assert.strictEqual(schema.allOf, undefined);
