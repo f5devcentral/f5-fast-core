@@ -8,6 +8,7 @@
 * template: Fix using full Mustache variable names (e.g., "var:lib:type") for dependencies and requires
 * template: Fix sections with a dot item overriding user definitions
 * template: Add missing doc strings for  HTTP fetching and forwarding functions
+* template: Fix missing defaults from merged templates
 * guiUtils: Additional fixes for allOf schema in modSchemaForJSONEditor()
 * guiUtils: Do not error if a dependency is missing from the properties
 
