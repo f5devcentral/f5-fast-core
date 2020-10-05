@@ -10,12 +10,11 @@ const guiUtils = require('../lib/gui_utils');
 
 describe('GUI utils test', function () {
     it('add_title', function () {
-        const schema = {};
-        guiUtils.modSchemaForJSONEditor(schema);
+        const schema = guiUtils.modSchemaForJSONEditor({});
         assert.strictEqual(schema.title, 'Template');
     });
     it('inject_formats', function () {
-        const schema = {
+        let schema = {
             properties: {
                 bool: { type: 'boolean' },
                 table: { type: 'array' },
@@ -31,7 +30,7 @@ describe('GUI utils test', function () {
                 }
             }
         };
-        guiUtils.modSchemaForJSONEditor(schema);
+        schema = guiUtils.modSchemaForJSONEditor(schema);
         assert.strictEqual(schema.properties.bool.format, 'checkbox');
         assert.strictEqual(schema.properties.table.format, 'table');
         assert.strictEqual(schema.properties.str.format, undefined);
@@ -39,7 +38,7 @@ describe('GUI utils test', function () {
         assert.strictEqual(schema.properties.multiselect.format, 'select');
     });
     it('add_deps', function () {
-        const schema = {
+        let schema = {
             properties: {
                 useFoo: { type: 'boolean' },
                 existingFoo: { type: 'boolean' },
@@ -53,13 +52,13 @@ describe('GUI utils test', function () {
                 existingFoo: ['useFoo']
             }
         };
-        guiUtils.modSchemaForJSONEditor(schema);
+        schema = guiUtils.modSchemaForJSONEditor(schema);
         console.log(JSON.stringify(schema, null, 2));
         assert.deepStrictEqual(schema.properties.foo.options.dependencies, { useFoo: true, existingFoo: false });
         assert.deepStrictEqual(schema.properties.bar.options.dependencies, { skipBar: false });
     });
     it('all_of_fixes', function () {
-        const schema = {
+        let schema = {
             properties: {
                 showFirst: { type: 'string' },
                 foo: { type: 'string' }
@@ -72,7 +71,7 @@ describe('GUI utils test', function () {
                 }
             ]
         };
-        guiUtils.modSchemaForJSONEditor(schema);
+        schema = guiUtils.modSchemaForJSONEditor(schema);
         console.log(JSON.stringify(schema, null, 2));
 
         // Order fixes

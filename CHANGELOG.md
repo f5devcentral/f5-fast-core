@@ -13,6 +13,7 @@
 
 ## Changed
 * cli: Run fetchHttp() as part of render command
+* guiUtils: modSchemaForJSONEditor() no longer modifies in place
 
 # v0.7.0
 ## Added

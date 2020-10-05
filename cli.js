@@ -60,8 +60,8 @@ const templateToParametersSchema = templatePath => loadTemplate(templatePath)
 
 const templateToParametersSchemaGui = templatePath => loadTemplate(templatePath)
     .then((tmpl) => {
-        const schema = tmpl.getParametersSchema();
-        guiUtils.modSchemaForJSONEditor(schema);
+        let schema = tmpl.getParametersSchema();
+        schema = guiUtils.modSchemaForJSONEditor(schema);
         console.log(JSON.stringify(schema, null, 2));
     })
     .catch((e) => {
