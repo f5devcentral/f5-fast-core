@@ -1,14 +1,14 @@
 # v0.8.0
 ## Added
-* Support extended user types (e.g., "var:lib:type") for sections and partials
-* Add post-processing strategies and add one for 'application/json' to cleanup dangling commas
+* template: Support extended user types (e.g., "var:lib:type") for sections and partials
+* template: Add post-processing strategies and add one for 'application/json' to cleanup dangling commas
 * cli: Add guiSchema sub command that runs the parameters schema through guiUtils.modSchemaForJSONEditor() before displaying it
 
 ## Fixed
 * template: Fix using full Mustache variable names (e.g., "var:lib:type") for dependencies and requires
+* template: Fix sections with a dot item overriding user definitions
+* template: Add missing doc strings for  HTTP fetching and forwarding functions
 * guiUtils: Additional fixes for allOf schema in modSchemaForJSONEditor()
-* Fix sections with a dot item overriding user definitions
-* Add missing doc strings for  HTTP fetching and forwarding functions 
 * guiUtils: Do not error if a dependency is missing from the properties
 
 ## Changed
