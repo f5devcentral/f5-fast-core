@@ -10,7 +10,7 @@ const yaml = require('js-yaml');
 
 const Template = require('./lib/template').Template;
 const FsTemplateProvider = require('./lib/template_provider').FsTemplateProvider;
-const generateHtmlPreview = require('./lib/gui_utils').generateHtmlPreview;
+const guiUtils = require('./lib/gui_utils');
 
 const loadTemplate = (templatePath) => {
     const tmplName = path.basename(templatePath, path.extname(templatePath));
@@ -50,7 +50,19 @@ const validateTemplate = templatePath => loadTemplate(templatePath)
 
 const templateToParametersSchema = templatePath => loadTemplate(templatePath)
     .then((tmpl) => {
-        console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
+        const schema = tmpl.getParametersSchema();
+        console.log(JSON.stringify(schema, null, 2));
+    })
+    .catch((e) => {
+        console.error(`Failed to generate schema:\n${e.stack}`);
+        process.exit(1);
+    });
+
+const templateToParametersSchemaGui = templatePath => loadTemplate(templatePath)
+    .then((tmpl) => {
+        const schema = tmpl.getParametersSchema();
+        guiUtils.modSchemaForJSONEditor(schema);
+        console.log(JSON.stringify(schema, null, 2));
     })
     .catch((e) => {
         console.error(`Failed to generate schema:\n${e.stack}`);
@@ -103,7 +115,7 @@ const validateTemplateSet = (tsPath) => {
 };
 
 const htmlPreview = (templatePath, parametersPath) => loadTemplateAndParameters(templatePath, parametersPath)
-    .then(([tmpl, parameters]) => generateHtmlPreview(
+    .then(([tmpl, parameters]) => guiUtils.generateHtmlPreview(
         tmpl.getParametersSchema(),
         tmpl.getCombinedParameters(parameters)
     ))
@@ -138,6 +150,12 @@ require('yargs')
                 describe: 'template source file to parse'
             });
     }, argv => templateToParametersSchema(argv.file))
+    .command('guiSchema <file>', 'get template parameter schema (modified for use with JSON Editor) for given template source file', (yargs) => {
+        yargs
+            .positional('file', {
+                describe: 'template source file to parse'
+            });
+    }, argv => templateToParametersSchemaGui(argv.file))
     .command('validateParameters <tmplFile> <parameterFile>', 'validate supplied template parameters with given template', (yargs) => {
         yargs
             .positional('tmplFile', {

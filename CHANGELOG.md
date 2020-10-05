@@ -2,6 +2,7 @@
 ## Added
 * Support extended user types (e.g., "var:lib:type") for sections and partials
 * Add post-processing strategies and add one for 'application/json' to cleanup dangling commas
+* cli: Add guiSchema sub command that runs the parameters schema through guiUtils.modSchemaForJSONEditor() before displaying it
 
 ## Fixed
 * template: Fix using full Mustache variable names (e.g., "var:lib:type") for dependencies and requires

@@ -35,6 +35,7 @@ fast <command>
 Commands:
   fast validate <file>                                validate given template source file
   fast schema <file>                                  get template parameter schema for given template source file
+  fast guiSchema <file>                               get template parameter schema (modified for use with JSON Editor) for given template source file
   fast validateParameters <tmplFile> <parameterFile>  validate supplied template parameters with given template
   fast render <tmplFile> [parameterFile]              render given template file with supplied parameters
   fast validateTemplateSet <templateSetPath>          validate supplied template set
