@@ -1,3 +1,11 @@
+# v0.9.0
+## Added
+* template: Add better support for JSON Editor "info" format
+
+## Fixed
+
+## Changed
+
 # v0.8.0
 ## Added
 * template: Support extended user types (e.g., "var:lib:type") for sections and partials

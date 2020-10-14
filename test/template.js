@@ -326,6 +326,22 @@ describe('Template class tests', function () {
                 assert.ok(anyOf[1].properties.mixin_prop);
             });
     });
+    it('schema_info_format', function () {
+        const ymldata = `
+            definitions:
+                comment:
+                    format: info
+            template: |
+                {{comment}}
+        `;
+
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                assert(!schema.required.includes('comment'));
+                assert.strictEqual(schema.properties.comment.const, '');
+            });
+    });
     it('render', function () {
         const mstdata = `
             {{foo::string}}
