@@ -11,7 +11,11 @@ chai.use(chaiAsPromised);
 const assert = chai.assert;
 
 const StorageMemory = require('@f5devcentral/atg-storage').StorageMemory;
-const { FsTemplateProvider, DataStoreTemplateProvider } = require('../lib/template_provider');
+const {
+    FsTemplateProvider,
+    FsSingleTemplateProvider,
+    DataStoreTemplateProvider
+} = require('../lib/template_provider');
 
 const templatesPath = './test/templatesets';
 
@@ -164,6 +168,15 @@ describe('template provider tests', function () {
         it('remove_tmpl_set', function () {
             const provider = new FsTemplateProvider(templatesPath);
             return assert.isRejected(provider.removeSet('example'), /not implemented/);
+        });
+    });
+    describe('FsSingleTemplateProvider', function () {
+        it('load_single_mst', function () {
+            const provider = new FsSingleTemplateProvider(`${templatesPath}/test`);
+            return provider.fetch('test/simple_udp')
+                .then((tmpl) => {
+                    assert.ok(tmpl);
+                });
         });
     });
     describe('DataStoreTemplateProvider', function () {
