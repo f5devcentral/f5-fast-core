@@ -169,6 +169,45 @@ templateProvider.fetch('templateSetName/templateName')
     });
 ```
 
+If only a subset of the directories should be loaded as template sets, `FsTemplateProvider` provides an option to filter directories:
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const templateSetsPath = '/path/to/templateSetsDir';
+const setsToLoad = ['foo', 'bar'];
+const templateProvider = new fast.FsTemplateProvider(templateSetsPath, setsToLoad);
+
+templateProvider.fetch('templateSetName/templateName')
+    .then((template) => {
+        console.log(template.getParametersSchema());
+        console.log(template.render({
+            var: "value",
+            boolVar: false
+        }));
+    });
+```
+
+A `FsSingleTemplateProvider` is provided as convenience for loading a single template set (instead of a directory of template sets):
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const templateSetPath = '/path/to/templateSet';
+const templateProvider = new fast.FsSingleTemplateProvider(templateSetPath);
+
+templateProvider.fetch('templateSet/templateName')
+    .then((template) => {
+        console.log(template.getParametersSchema());
+        console.log(template.render({
+            var: "value",
+            boolVar: false
+        }));
+    });
+```
+
+Note that despite loading a single template set, a template set name must still be provided when querying the provider.
+
 ### HTTP Fetch
 
 To resolve external URLs in templates, a `Template.fetchHttp()` is available.

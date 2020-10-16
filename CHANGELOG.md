@@ -1,6 +1,7 @@
 # v0.9.0
 ## Added
 * template: Add better support for JSON Editor "info" format
+* template_provider: Add FsSingleTemplateProvider convenience class to load a single template set
 
 ## Fixed
 
