@@ -888,4 +888,42 @@ describe('Template class tests', function () {
                 assert.match(e.message, /httpForward was not defined for this template/);
             });
     });
+    it('merge_json', function () {
+        const yamldata = `
+            contentType: application/json
+            allOf:
+                - contentType: application/json
+                  template: |
+                      { "foo": [ {{baseFoo}} ], "data": { "base": true }  }
+            template: |
+                {
+                    "foo": [ {{extraFoo}} ],
+                    "data": { "extra": {{data}} },
+                    "var": 1
+                }
+        `;
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+
+                assert.ok(schema.allOf);
+                assert.ok(schema.properties.extraFoo);
+
+                const view = {
+                    baseFoo: 'bar',
+                    extraFoo: 'baz',
+                    data: 'lorem ipsum'
+                };
+                const rendered = JSON.parse(tmpl.render(view));
+                assert.deepStrictEqual(rendered, {
+                    foo: ['bar', 'baz'],
+                    data: {
+                        base: true,
+                        extra: 'lorem ipsum'
+                    },
+                    var: 1
+                });
+            });
+    });
 });
