@@ -2,6 +2,7 @@
 ## Added
 * template: Add better support for JSON Editor "info" format
 * template_provider: Add FsSingleTemplateProvider convenience class to load a single template set
+* template: Add support for YAML contentType (text/x-yaml, application/x-yaml, and application/yaml are all accepted)
 
 ## Fixed
 

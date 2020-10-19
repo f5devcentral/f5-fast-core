@@ -7,6 +7,7 @@
 const fs = require('fs');
 const assert = require('assert').strict;
 const nock = require('nock');
+const yaml = require('js-yaml');
 
 const FsSchemaProvider = require('../lib/schema_provider').FsSchemaProvider;
 const Template = require('../lib/template').Template;
@@ -921,6 +922,50 @@ describe('Template class tests', function () {
                     data: {
                         base: true,
                         extra: 'lorem ipsum'
+                    },
+                    var: 1
+                });
+            });
+    });
+    it('merge_yaml', function () {
+        const yamldata = `
+            contentType: application/yaml
+            allOf:
+                - contentType: application/yaml
+                  template: |
+                      foo:
+                          - {{baseFoo}}
+                      data:
+                          base: true
+            template: |
+                foo:
+                    - {{extraFoo}}
+                data:
+                    extra: |
+                        {{data}}
+                var: 1
+        `;
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+
+                assert.ok(schema.allOf);
+                assert.ok(schema.properties.extraFoo);
+
+                const view = {
+                    baseFoo: 'bar',
+                    extraFoo: 'baz',
+                    data: 'lorem ipsum'
+                };
+                const renderedText = tmpl.render(view);
+                console.log(renderedText);
+                const rendered = yaml.safeLoad(renderedText);
+                assert.deepStrictEqual(rendered, {
+                    foo: ['bar', 'baz'],
+                    data: {
+                        base: true,
+                        extra: 'lorem ipsum\n'
                     },
                     var: 1
                 });
