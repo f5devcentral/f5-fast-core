@@ -7,6 +7,7 @@
 ## Fixed
 
 ## Changed
+* Switch from internal httpUtils library to axios (httpUtils has also been removed)
 
 # v0.8.0
 ## Added
