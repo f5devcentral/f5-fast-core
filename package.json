@@ -9,7 +9,7 @@
     "test": "mocha --recursive \"./test/*.js\"",
     "lint": "eslint lib test index.js cli.js --ignore-pattern jsoneditor.js",
     "buildbin": "./scripts/build-fastbin.sh",
-    "coverage": "nyc npm test"
+    "coverage": "nyc -r text -r html npm test"
   },
   "keywords": [
     "as3",
