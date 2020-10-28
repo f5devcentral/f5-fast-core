@@ -971,4 +971,39 @@ describe('Template class tests', function () {
                 });
             });
     });
+    it('math_expr', function () {
+        const yamldata = `
+            definitions:
+                output:
+                    title: Output
+                    description: The calculated value
+                    mathExpression: 3 * inpA + inpB
+                inpA:
+                    title: Input A
+                    type: integer
+                inpB:
+                    title: Input B
+                    type: integer
+            parameters:
+                inpA: 2
+            template: |
+                {{output}}
+        `;
+        const view = {
+            inpB: 3
+        };
+
+        const reference = '9';
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                assert.strictEqual(schema.properties.output.format, 'hidden');
+                assert.ok(schema.properties.inpA);
+                assert.ok(schema.properties.inpB);
+                console.log(schema);
+                const rendered = tmpl.render(view).trim();
+                console.log(rendered);
+                assert.strictEqual(rendered, reference);
+            });
+    });
 });

@@ -58,6 +58,7 @@
     "js-yaml": "^3.14.0",
     "json-schema-merge-allof": "^0.7.0",
     "jsonpath-plus": "^4.0.0",
+    "math-expression-evaluator": "^1.2.22",
     "mustache": "^4.0.1",
     "uuid": "^7.0.3",
     "yargs": "^15.4.1"
