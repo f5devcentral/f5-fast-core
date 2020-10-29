@@ -68,6 +68,11 @@ describe('GUI utils test', function () {
                     properties: {
                         baz: { type: 'integer' }
                     }
+                },
+                {
+                    properties: {
+                        baz: { type: 'integer' }
+                    }
                 }
             ]
         };
@@ -75,9 +80,11 @@ describe('GUI utils test', function () {
         console.log(JSON.stringify(schema, null, 2));
 
         // Order fixes
-        assert.strictEqual(schema.properties.baz.propertyOrder, 0);
-        assert.strictEqual(schema.properties.showFirst.propertyOrder, 1);
-        assert.strictEqual(schema.properties.foo.propertyOrder, 2);
+        const expectedOrder = ['baz', 'showFirst', 'foo'];
+        const actualOrder = Object.keys(schema.properties).sort((a, b) => (
+            schema.properties[a].propertyOrder - schema.properties[b].propertyOrder
+        ));
+        assert.deepStrictEqual(actualOrder, expectedOrder);
 
         // Flatten allOf
         assert.strictEqual(schema.allOf, undefined);

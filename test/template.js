@@ -971,6 +971,27 @@ describe('Template class tests', function () {
                 });
             });
     });
+    it('merge_multiple_allof', function () {
+        const yamldata = `
+            allOf:
+                - template: "{{foo}}{{bar}}"
+                - template: "{{bar}}{{foo}}"
+            template: "{{foo}}{{foo}}{{bar}}"
+        `;
+        const view = {
+            foo: '1',
+            bar: 'b'
+        };
+        const reference = '1b\nb1\n11b';
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+
+                const rendered = tmpl.render(view);
+                assert.strictEqual(rendered, reference);
+            });
+    });
     it('math_expr', function () {
         const yamldata = `
             definitions:

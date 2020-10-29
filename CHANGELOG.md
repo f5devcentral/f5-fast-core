@@ -6,6 +6,7 @@
 * template: Add support for calculating parameter values from arithmetic expressions
 
 ## Fixed
+* guiUtils: Fix "No resolver found for key propertyOrder" error when collapsing multiple allOf items
 
 ## Changed
 * Switch from internal httpUtils library to axios (httpUtils has also been removed)
