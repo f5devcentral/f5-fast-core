@@ -12,6 +12,7 @@
 ## Changed
 * Switch from internal httpUtils library to axios (httpUtils has also been removed)
 * template: Prefer defaults from the current template over merged in templates
+* templates: Allow definitions to override values in merged templates even if the parameters are not present in the template text
 
 # v0.8.0
 ## Added

@@ -998,18 +998,22 @@ describe('Template class tests', function () {
                 - title: base
                   definitions:
                     foo:
-                        default: "bar"
-                  template: "{{foo}}"
+                        default: bar
+                    otherParam:
+                        default: one
+                  template: "{{foo}}{{otherParam}}"
             title: extended
             definitions:
                 foo:
-                    default: "baz"
+                    default: baz
+                otherParam:
+                    default: two
             template: "{{foo}}"
         `;
 
         const view = {
         };
-        const reference = 'baz\nbaz';
+        const reference = 'baztwo\nbaz';
         return Template.loadYaml(yamldata)
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
