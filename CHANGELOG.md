@@ -10,6 +10,7 @@
 
 ## Changed
 * Switch from internal httpUtils library to axios (httpUtils has also been removed)
+* template: Prefer defaults from the current template over merged in templates
 
 # v0.8.0
 ## Added

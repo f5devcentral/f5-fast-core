@@ -992,6 +992,33 @@ describe('Template class tests', function () {
                 assert.strictEqual(rendered, reference);
             });
     });
+    it('merge_defaults', function () {
+        const yamldata = `
+            allOf:
+                - title: base
+                  definitions:
+                    foo:
+                        default: "bar"
+                  template: "{{foo}}"
+            title: extended
+            definitions:
+                foo:
+                    default: "baz"
+            template: "{{foo}}"
+        `;
+
+        const view = {
+        };
+        const reference = 'baz\nbaz';
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+
+                const rendered = tmpl.render(view);
+                assert.strictEqual(rendered, reference);
+            });
+    });
     it('math_expr', function () {
         const yamldata = `
             definitions:
