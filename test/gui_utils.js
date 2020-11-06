@@ -89,6 +89,36 @@ describe('GUI utils test', function () {
         // Flatten allOf
         assert.strictEqual(schema.allOf, undefined);
     });
+    it('merge_mixins', function () {
+        let schema = {
+            properties: {
+                showFirst: { type: 'string' },
+                foo: { type: 'string' }
+            },
+            anyOf: [
+                {},
+                {
+                    properties: {
+                        baz: { type: 'integer' }
+                    }
+                }
+            ]
+        };
+        schema = guiUtils.modSchemaForJSONEditor(schema);
+        console.log(JSON.stringify(schema, null, 2));
+
+        assert.ok(schema.properties.baz);
+
+        // Order fixes
+        const expectedOrder = ['showFirst', 'foo', 'baz'];
+        const actualOrder = Object.keys(schema.properties).sort((a, b) => (
+            schema.properties[a].propertyOrder - schema.properties[b].propertyOrder
+        ));
+        assert.deepStrictEqual(actualOrder, expectedOrder);
+
+        // Flatten anyOf
+        assert.strictEqual(schema.anyOf, undefined);
+    });
     it('filter_extra_props', function () {
         const schema = {
             properties: {
