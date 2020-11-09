@@ -94,7 +94,6 @@ const renderTemplate = (templatePath, parametersPath) => loadTemplateAndParamete
             .then(httpParams => Object.assign({}, parameters, httpParams))
     ]))
     .then(([tmpl, parameters]) => {
-        validateParamData(tmpl, parameters);
         console.log(tmpl.render(parameters));
     })
     .catch((e) => {
