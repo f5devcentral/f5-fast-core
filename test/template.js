@@ -81,11 +81,7 @@ describe('Template class tests', function () {
                 assert.deepStrictEqual(tmpl.defaultParameters, {
                     message: 'Hello!'
                 });
-                assert.deepStrictEqual(tmpl.definitions, {
-                    body: {
-                        template: '<body> <h1>{{message}}</h1> </body>'
-                    }
-                });
+                assert.ok(tmpl.definitions.body);
                 assert.strictEqual(tmpl.templateText, '<html>\n  {{> body}}\n</html>\n');
                 assert.strictEqual(tmpl.sourceType, 'YAML');
                 assert.strictEqual(tmpl.sourceText, ymldata);
@@ -362,7 +358,7 @@ describe('Template class tests', function () {
         const ymldata = fs.readFileSync(`${templatesPath}/complex.yml`, 'utf8');
         return Template.loadYaml(ymldata)
             .then((tmpl) => {
-                assert.notStrictEqual(tmpl._getPartials(), {});
+                assert.notStrictEqual(tmpl._partials, {});
             });
     });
     it('render_partial_with_type', function () {
