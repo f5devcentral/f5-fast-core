@@ -279,7 +279,7 @@ const yamldata = `
         {{var}}
 `;
 
-fast.Template..loadYaml(yamldata)
+fast.Template.loadYaml(yamldata)
     .then(template => template.forwardHttp()); // POST "foo" to http://example.com/resource
 ```
 
