@@ -81,7 +81,7 @@ describe('Template class tests', function () {
                 assert.deepStrictEqual(tmpl.defaultParameters, {
                     message: 'Hello!'
                 });
-                assert.ok(tmpl.definitions.body);
+                assert.ok(tmpl._partials.body);
                 assert.strictEqual(tmpl.templateText, '<html>\n  {{> body}}\n</html>\n');
                 assert.strictEqual(tmpl.sourceType, 'YAML');
                 assert.strictEqual(tmpl.sourceText, ymldata);
@@ -452,8 +452,9 @@ describe('Template class tests', function () {
 
         return Template.loadMst(mstdata, schemaProvider)
             .then((tmpl) => {
-                console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
-                assert.strictEqual(tmpl.definitions.port.type, 'integer');
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+                assert.strictEqual(schema.properties.virtual_port.type, 'integer');
             });
     });
     it('render_array', function () {

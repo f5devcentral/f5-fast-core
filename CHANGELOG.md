@@ -13,7 +13,10 @@
 ## Changed
 * Switch from internal httpUtils library to axios (httpUtils has also been removed)
 * template: Prefer defaults from the current template over merged in templates
-* templates: Allow definitions to override values in merged templates even if the parameters are not present in the template text
+* template: Allow definitions to override values in merged templates even if the parameters are not present in the template text
+* template: Significantly reduce the size of the Template object
+* template: Remove typeDefinitions from the public API
+* template: Prune unused definitions (Template.definitions no longer contains the original definitions from the template file)
 
 # v0.8.0
 ## Added

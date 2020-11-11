@@ -53,11 +53,12 @@ function runSharedTests(createProvider) {
         return provider.fetch('test/complex')
             .then((tmpl) => {
                 assert.ok(tmpl);
-                console.log(JSON.stringify(tmpl, null, 2));
-                assert.strictEqual(tmpl.title, 'chat window');
-                assert.strictEqual(tmpl.description, '');
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+                assert.strictEqual(schema.title, 'chat window');
+                assert.strictEqual(schema.description, '');
                 assert.strictEqual(tmpl.target, 'as3');
-                assert.ok(tmpl.definitions.chatlog);
+                assert.ok(tmpl._partials.chatlog);
             });
     });
     it('load_single_with_schema', function () {

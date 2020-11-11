@@ -44,8 +44,9 @@ const loadTemplateAndParameters = (templatePath, parametersPath) => Promise.all(
 ]);
 
 const validateTemplate = templatePath => loadTemplate(templatePath)
-    .then(() => {
+    .then((tmpl) => {
         console.log(`template source at ${templatePath} is valid`);
+        console.log(JSON.stringify(tmpl));
     });
 
 const templateToParametersSchema = templatePath => loadTemplate(templatePath)
