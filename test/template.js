@@ -1038,20 +1038,20 @@ describe('Template class tests', function () {
                 output:
                     title: Output
                     description: The calculated value
-                    mathExpression: 3 * inpA + inpB
-                inpA:
+                    mathExpression: 3 * input_foo + input_b
+                input_foo:
                     title: Input A
                     type: integer
-                inpB:
+                input_b:
                     title: Input B
                     type: integer
             parameters:
-                inpA: 2
+                input_foo: 2
             template: |
                 {{output}}
         `;
         const view = {
-            inpB: 3
+            input_b: 3
         };
 
         const reference = '9';
@@ -1059,8 +1059,8 @@ describe('Template class tests', function () {
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
                 assert.strictEqual(schema.properties.output.format, 'hidden');
-                assert.ok(schema.properties.inpA);
-                assert.ok(schema.properties.inpB);
+                assert.ok(schema.properties.input_foo);
+                assert.ok(schema.properties.input_b);
                 console.log(schema);
                 const rendered = tmpl.render(view).trim();
                 console.log(rendered);
