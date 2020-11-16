@@ -328,7 +328,7 @@ describe('Template class tests', function () {
             definitions:
                 comment:
                     format: info
-            template: |
+            template: |-
                 {{comment}}
         `;
 
@@ -337,6 +337,8 @@ describe('Template class tests', function () {
                 const schema = tmpl.getParametersSchema();
                 assert(!schema.required.includes('comment'));
                 assert.strictEqual(schema.properties.comment.const, '');
+                const rendered = tmpl.render();
+                assert.strictEqual(rendered, '');
             });
     });
     it('render', function () {
@@ -889,8 +891,18 @@ describe('Template class tests', function () {
     it('merge_json', function () {
         const yamldata = `
             contentType: application/json
+            title: Extended
             allOf:
                 - contentType: application/json
+                  title: Info Block
+                  definitions:
+                      info:
+                          title: Do not render
+                          format: info
+                  template: |-
+                      {{info}}
+                - contentType: application/json
+                  title: Base
                   template: |
                       { "foo": [ {{baseFoo}} ], "data": { "base": true }  }
             template: |

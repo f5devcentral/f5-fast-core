@@ -9,6 +9,7 @@
 * guiUtils: Fix "No resolver found for key propertyOrder" error when collapsing multiple allOf items
 * guiUtils: Fix "No resolver found for key invertDependency" when collapsing allOf items
 * template: Fix for duplicate items in dependencies
+* template: Fix running JSON and YAML post-process strategies on empty strings
 
 ## Changed
 * Switch from internal httpUtils library to axios (httpUtils has also been removed)
