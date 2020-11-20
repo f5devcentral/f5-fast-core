@@ -1045,16 +1045,25 @@ describe('Template class tests', function () {
                 input_b:
                     title: Input B
                     type: integer
+            allOf:
+                - definitions:
+                    merged_input:
+                        type: integer
+                    merged_output:
+                        mathExpression: 5 * merged_input + 1
+                  template: |-
+                      {{merged_output}}
             parameters:
                 input_foo: 2
             template: |
                 {{output}}
         `;
         const view = {
-            input_b: 3
+            input_b: 3,
+            merged_input: 10
         };
 
-        const reference = '9';
+        const reference = '51\n9';
         return Template.loadYaml(yamldata)
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
