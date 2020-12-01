@@ -119,6 +119,39 @@ describe('GUI utils test', function () {
         // Flatten anyOf
         assert.strictEqual(schema.anyOf, undefined);
     });
+    it('remove_math_expressions', function () {
+        let schema = {
+            properties: {
+                remove: {
+                    type: 'string',
+                    format: 'hidden',
+                    mathExpression: ''
+                },
+                keep: {
+                    type: 'string',
+                    format: 'text',
+                    mathExpression: ''
+                },
+                keep2: {
+                    type: 'string',
+                    title: 'important stuff',
+                    mathExpression: ''
+                },
+                keep3: {
+                    type: 'string',
+                    description: 'important stuff',
+                    mathExpression: ''
+                }
+            }
+        };
+
+        schema = guiUtils.modSchemaForJSONEditor(schema);
+
+        assert.ok(schema.properties.keep);
+        assert.ok(schema.properties.keep2);
+        assert.ok(schema.properties.keep3);
+        assert.strictEqual(schema.properties.remove, undefined);
+    });
     it('filter_extra_props', function () {
         const schema = {
             properties: {
