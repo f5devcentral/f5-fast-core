@@ -105,8 +105,26 @@ const validateTemplateSet = (tsPath) => {
     const tsName = path.basename(tsPath);
     const tsDir = path.dirname(tsPath);
     const provider = new FsTemplateProvider(tsDir, [tsName]);
+    let errorFound = false;
     return provider.list()
-        .then(templateList => Promise.all(templateList.map(tmpl => provider.fetch(tmpl))))
+        .then(templateList => Promise.all(
+            templateList.map(
+                tmpl => provider.fetch(tmpl)
+                    .catch((e) => {
+                        console.error(
+                            `Template "${tmpl}" failed validation:\n${e.stack}\n`
+                        );
+                        errorFound = true;
+                    })
+
+            )
+        ))
+        .then(() => {
+            if (errorFound) {
+                console.error(`Template set "${tsName}" failed validation`);
+                process.exit(1);
+            }
+        })
         .catch((e) => {
             console.error(`Template set "${tsName}" failed validation:\n${e.stack}`);
             process.exit(1);

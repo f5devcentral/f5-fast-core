@@ -9,6 +9,7 @@
 * template: Skip creating unused parameter validators on merged-in templates
 * guiUtils: Remove hidden mathExpression parameters from the GUI schema
 * htmlpreview: Pull JSON Editor from a CDN
+* cli: Display errors for each template when using validateTemplateSet
 
 # v0.9.0
 ## Added
