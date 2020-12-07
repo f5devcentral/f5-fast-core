@@ -1,3 +1,15 @@
+# v0.10.0
+## Added
+
+## Fixed
+* template: Fix duplicate allOf property
+* template: Fix gathering tokens for mathExpressions on merged templates
+
+## Changed
+* template: Skip creating unused parameter validators on merged-in templates
+* guiUtils: Remove hidden mathExpression parameters from the GUI schema
+* htmlpreview: Pull JSON Editor from a CDN
+
 # v0.9.0
 ## Added
 * template: Add better support for JSON Editor "info" format
