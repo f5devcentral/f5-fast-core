@@ -53,7 +53,7 @@
     "@f5devcentral/atg-storage": "1.0.0",
     "ajv": "^6.12.6",
     "archiver": "^4.0.2",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "deepmerge": "^4.2.2",
     "js-yaml": "^3.14.0",
     "json-schema-merge-allof": "^0.7.0",
