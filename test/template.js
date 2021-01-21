@@ -1034,6 +1034,7 @@ describe('Template class tests', function () {
     });
     it('math_expr', function () {
         const yamldata = `
+            title: extended
             definitions:
                 output:
                     title: Output
@@ -1046,7 +1047,8 @@ describe('Template class tests', function () {
                     title: Input B
                     type: integer
             allOf:
-                - definitions:
+                - title: base
+                  definitions:
                     merged_input:
                         type: integer
                     merged_output:
@@ -1072,6 +1074,34 @@ describe('Template class tests', function () {
                 assert.ok(schema.properties.input_b);
                 console.log(schema);
                 const rendered = tmpl.render(view).trim();
+                console.log(rendered);
+                assert.strictEqual(rendered, reference);
+            });
+    });
+    it('merge_and_clean_defs', function () {
+        const yamldata = `
+            title: extended
+            allOf:
+                - title: base
+                  definitions:
+                    foo:
+                        type: integer
+                    bar:
+                        type: integer
+                  template: baz
+            template: |-
+                {{foo}}
+        `;
+        const view = {
+            foo: 5
+        };
+        const reference = 'baz\n5';
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(schema);
+
+                const rendered = tmpl.render(view);
                 console.log(rendered);
                 assert.strictEqual(rendered, reference);
             });

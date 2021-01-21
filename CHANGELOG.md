@@ -2,6 +2,7 @@
 ## Added
 
 ## Fixed
+* template: Allow using definitions from merged templates even when the definition is unused in the merged template
 
 ## Changed
 
