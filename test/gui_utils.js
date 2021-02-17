@@ -104,6 +104,88 @@ describe('GUI utils test', function () {
         // Flatten allOf
         assert.strictEqual(schema.allOf, undefined);
     });
+    it('all_of_merge_dependencies', function () {
+        let schema = {
+            type: 'object',
+            allOf: [
+                {
+                    type: 'object',
+                    properties: {
+                        section1: {
+                            type: 'boolean',
+                            default: false
+                        },
+                        foo: {
+                            type: 'string',
+                            default: ''
+                        }
+                    },
+                    required: [
+                        'section1'
+                    ],
+                    dependencies: {
+                        foo: [
+                            'section1'
+                        ]
+                    },
+                    title: 'Section1'
+                },
+                {
+                    type: 'object',
+                    properties: {
+                        section2: {
+                            type: 'boolean',
+                            default: false
+                        },
+                        foo: {
+                            type: 'string',
+                            default: ''
+                        }
+                    },
+                    required: [
+                        'section2'
+                    ],
+                    dependencies: {
+                        foo: [
+                            'section2'
+                        ]
+                    },
+                    title: 'Section2'
+                },
+                {
+                    type: 'object',
+                    properties: {
+                        section3: {
+                            type: 'boolean',
+                            default: false
+                        },
+                        foo: {
+                            type: 'string',
+                            default: '',
+                            invertDependency: [
+                                'section3'
+                            ]
+                        }
+                    },
+                    required: [
+                        'section3'
+                    ],
+                    dependencies: {
+                        foo: [
+                            'section3'
+                        ]
+                    },
+                    title: 'Section3'
+                }
+            ]
+        };
+
+        schema = guiUtils.modSchemaForJSONEditor(schema);
+        console.log(JSON.stringify(schema, null, 2));
+
+        assert.deepStrictEqual(schema.dependencies.foo, ['section1', 'section2', 'section3']);
+        assert.strictEqual(schema.properties.foo.options.dependencies.section3, false);
+    });
     it('merge_mixins', function () {
         let schema = {
             properties: {

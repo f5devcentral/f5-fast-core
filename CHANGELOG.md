@@ -2,6 +2,7 @@
 ## Added
 
 ## Fixed
+* guiUtils: Fix merging dependencies when collapsing allOf items
 
 ## Changed
 
