@@ -1,5 +1,6 @@
 # v0.11.0
 ## Added
+* template: Allow overriding automatic dependencies with definitions
 
 ## Fixed
 * guiUtils: Fix merging dependencies when collapsing allOf items

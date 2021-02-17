@@ -355,6 +355,32 @@ describe('Template class tests', function () {
                 );
             });
     });
+    it('schema_sections_explicit_deps', function () {
+        const ymldata = `
+            definitions:
+                section:
+                    type: boolean
+                negSec:
+                    type: boolean
+                foo:
+                    dependencies:
+                        - section
+                    invertDependency:
+                        - section
+            template: |
+                {{#section}}Positive {{foo}}{{/section}}
+                {{^section}}Inverted {{foo}}{{/section}}
+                {{^negSec}}{{foo}}{{/negSec}}
+        `;
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+
+                assert.deepStrictEqual(schema.dependencies.foo, ['section']);
+                assert.deepStrictEqual(schema.properties.foo.invertDependency, ['section']);
+            });
+    });
     it('schema_x_of', function () {
         const ymldata = fs.readFileSync(`${templatesPath}/combine.yml`, 'utf8');
         return Template.loadYaml(ymldata)
