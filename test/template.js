@@ -279,6 +279,44 @@ describe('Template class tests', function () {
                 assert(!sectionDef.items);
             });
     });
+    it('schema_sections_partials', function () {
+        const ymldata = `
+            definitions:
+                section1:
+                    type: boolean
+                section2:
+                    type: boolean
+                s1:
+                    template: "{{#section1}}{{foo}}{{/section1}}"
+                s2:
+                    template: "{{#section2}}{{foo}}{{/section2}}"
+            template: |
+                {{> s1}}
+                {{> s2}}
+        `;
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+                assert(
+                    schema.required.includes('section1'),
+                    'section1 should be required'
+                );
+                assert(
+                    !schema.required.includes('foo'),
+                    'foo should not be required on base schema'
+                );
+                assert.ok(schema.properties.foo, 'foo variable should have been hoisted to global scope');
+                assert.ok(schema.dependencies);
+                assert.deepStrictEqual(schema.dependencies.foo, ['section1', 'section2']);
+
+                const sectionDef = schema.properties.section1;
+                console.log(JSON.stringify(sectionDef, null, 2));
+                assert.ok(sectionDef);
+                assert.strictEqual(sectionDef.type, 'boolean');
+                assert(!sectionDef.items);
+            });
+    });
     it('schema_sections_object', function () {
         const ymldata = `
             definitions:

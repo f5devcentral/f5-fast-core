@@ -3,6 +3,7 @@
 
 ## Fixed
 * guiUtils: Fix merging dependencies when collapsing allOf items
+* template: Fix merging dependencies when using partials
 
 ## Changed
 
