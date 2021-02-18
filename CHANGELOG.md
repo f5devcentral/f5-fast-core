@@ -7,6 +7,7 @@
 * template: Fix merging dependencies when using partials
 
 ## Changed
+* Updated dependencies
 
 # v0.10.0
 ## Added
