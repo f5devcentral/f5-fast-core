@@ -46,7 +46,7 @@ const loadTemplate = (templatePath) => {
 const loadParameters = (parametersPath) => {
     if (!parametersPath) return Promise.resolve({});
     return fs.readFile(parametersPath, 'utf8')
-        .then(paramsData => yaml.safeLoad(paramsData))
+        .then(paramsData => yaml.load(paramsData))
         .catch((e) => {
             console.error(`Failed to load the parameters file:\n${e.stack}`);
             process.exit(1);

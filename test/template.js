@@ -1048,7 +1048,7 @@ describe('Template class tests', function () {
                 };
                 const renderedText = tmpl.render(view);
                 console.log(renderedText);
-                const rendered = yaml.safeLoad(renderedText);
+                const rendered = yaml.load(renderedText);
                 assert.deepStrictEqual(rendered, {
                     foo: ['bar', 'baz'],
                     data: {
