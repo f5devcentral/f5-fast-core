@@ -1,3 +1,14 @@
+# v0.12.0
+## Added
+* template: Allow using a TemplateProvider to resolve external JSON references
+
+## Fixed
+
+## Changed
+* Updated Ajv dependency to 7.x
+* Updated js-yaml dependency to 4.x
+* Switch from arciver to adm-zip to reduce transitive dependencies
+
 # v0.11.0
 ## Added
 * template: Allow overriding automatic dependencies with definitions
