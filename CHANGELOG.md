@@ -7,7 +7,6 @@
 ## Changed
 * Update Ajv dependency to 7.x
 * Update js-yaml dependency to 4.x
-* Update json-schema-merge-allof to 0.8.x
 * Switch from archiver to adm-zip to reduce transitive dependencies
 * Remove uuid dependency
 
