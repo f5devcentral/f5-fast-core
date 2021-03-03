@@ -7,7 +7,8 @@
 ## Changed
 * Updated Ajv dependency to 7.x
 * Updated js-yaml dependency to 4.x
-* Switch from arciver to adm-zip to reduce transitive dependencies
+* Switch from archiver to adm-zip to reduce transitive dependencies
+* Remove uuid dependency
 
 # v0.11.0
 ## Added
