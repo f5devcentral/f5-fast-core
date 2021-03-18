@@ -74,17 +74,20 @@ describe('GUI utils test', function () {
     });
     it('all_of_fixes', function () {
         let schema = {
+            title: 'top level',
             properties: {
                 showFirst: { type: 'string' },
                 foo: { type: 'string' }
             },
             allOf: [
                 {
+                    title: 'sub 1',
                     properties: {
                         baz: { type: 'integer' }
                     }
                 },
                 {
+                    title: 'sub 2',
                     properties: {
                         baz: { type: 'integer' }
                     }
@@ -103,6 +106,9 @@ describe('GUI utils test', function () {
 
         // Flatten allOf
         assert.strictEqual(schema.allOf, undefined);
+
+        // Preserve top-level title
+        assert.strictEqual(schema.title, 'top level');
     });
     it('all_of_merge_dependencies', function () {
         let schema = {
