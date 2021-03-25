@@ -3,6 +3,7 @@
   "version": "0.11.0",
   "author": "F5 Networks",
   "license": "Apache-2.0",
+  "repository": "github:f5devcentral/f5-fast-core",
   "main": "index.js",
   "description": "The core module for F5 Application Services Templates",
   "scripts": {
