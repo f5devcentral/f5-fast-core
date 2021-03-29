@@ -9,6 +9,7 @@
 * Update js-yaml dependency to 4.x
 * Switch from archiver to adm-zip to reduce transitive dependencies
 * Remove uuid dependency
+* Remove json-schema-merge-allof dependency
 
 # v0.11.0
 ## Added
