@@ -3,9 +3,9 @@
 * template: Allow using a TemplateProvider to resolve external JSON references
 
 ## Fixed
+* TemplateProvider: Fix template sets with matching prefixes from getting listed together
 
 ## Changed
-* Update Ajv dependency to 7.x
 * Update js-yaml dependency to 4.x
 * Switch from archiver to adm-zip to reduce transitive dependencies
 * Remove uuid dependency
