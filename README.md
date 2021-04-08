@@ -60,6 +60,10 @@ For example:
 ./cli.js render path/to/template
 ```
 
+## Authoring Templates
+
+Documentation on how to write FAST templates can be found [here](https://clouddocs.f5.com/products/extensions/f5-appsvcs-templates/latest/userguide/json-schema.html).
+
 ## Module API
 
 ### Simple Loading
