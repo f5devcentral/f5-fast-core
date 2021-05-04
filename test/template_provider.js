@@ -147,6 +147,13 @@ function runSharedTests(createProvider) {
                     'test/simple',
                     'test/simple_udp'
                 ]);
+                const tmplDesc = setData.templates.map(x => x.description).sort();
+                assert.deepStrictEqual(tmplDesc, [
+                    '',
+                    'A simple template to test we can handle the .yaml file extension',
+                    'An example of how to combine templates',
+                    'Simple UDP load balancer using the same port on client and server side.\nUses AS3 template: udp.'
+                ]);
                 const schemaNames = setData.schemas.map(x => x.name).sort();
                 assert.deepStrictEqual(schemaNames, [
                     'test/types'
