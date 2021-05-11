@@ -1,3 +1,7 @@
+# v0.13.0
+## Added
+* TemplateProvider: Return template description and title with getSetData()
+
 # v0.12.0
 ## Added
 * template: Allow using a TemplateProvider to resolve external JSON references
