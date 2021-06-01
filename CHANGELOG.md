@@ -2,6 +2,9 @@
 ## Fixed
 * template: Fix merging array items definitions with custom types
 
+## Changed
+* ResourceCache: Improve cache utilization for concurrent requests
+
 # v0.13.0
 ## Added
 * TemplateProvider: Return template description and title with getSetData()
