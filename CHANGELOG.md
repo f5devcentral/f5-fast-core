@@ -1,3 +1,7 @@
+# v0.14.0
+## Fixed
+* template: Fix merging array items definitions with custom types
+
 # v0.13.0
 ## Added
 * TemplateProvider: Return template description and title with getSetData()

@@ -776,6 +776,36 @@ describe('Template class tests', function () {
                 assert.strictEqual(schema.properties.https_port.default, 500);
             });
     });
+    it('schema_mix_array_item_defs', function () {
+        const schemaProvider = new FsSchemaProvider(templatesPath);
+        const yamldata = `
+            definitions:
+                pool_members:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        addr:
+                          title: Address
+                          type: string
+                        port:
+                          title: Port
+            template: |
+                {{#pool_members}}
+                {{addr}}{{port:types:port}}
+                {{/pool_members}}
+        `;
+
+        return Template.loadYaml(yamldata, schemaProvider)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(schema);
+
+                const itemsProps = schema.properties.pool_members.items.properties;
+                assert.strictEqual(itemsProps.port.title, 'Port');
+                assert.strictEqual(itemsProps.port.default, 443);
+            });
+    });
     it('ref_fail_http', function () {
         const ymldata = `
             definitions:
