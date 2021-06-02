@@ -1,6 +1,7 @@
 # v0.14.0
 ## Fixed
 * template: Fix merging array items definitions with custom types
+* template: Fix over-aggressive cleaning of definitions referenced in "items" keyword
 
 ## Changed
 * ResourceCache: Improve cache utilization for concurrent requests
