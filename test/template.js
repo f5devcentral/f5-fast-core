@@ -420,6 +420,31 @@ describe('Template class tests', function () {
                 assert.strictEqual(rendered, '');
             });
     });
+    it('schema_required_defaults', function () {
+        const ymldata = `
+            definitions:
+                foo:
+                    default: bar
+                arrayProp:
+                    items:
+                        properties:
+                            propA:
+                                default: a
+            template: |-
+                {{foo}}{{bar}}
+                {{#arrayProp}}
+                    {{propA}}{{propB}}
+                {{/arrayProp}}
+        `;
+
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+
+                assert.deepStrictEqual(schema.required, ['bar', 'arrayProp']);
+                assert.deepStrictEqual(schema.properties.arrayProp.items.required, ['propB']);
+            });
+    });
     it('render', function () {
         const mstdata = `
             {{foo::string}}
