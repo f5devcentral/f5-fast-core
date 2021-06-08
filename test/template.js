@@ -142,8 +142,8 @@ describe('Template class tests', function () {
         const reference = {
             type: 'object',
             properties: {
-                variable1: { type: 'string', default: '' },
-                string_variable: { type: 'string', default: '' },
+                variable1: { type: 'string' },
+                string_variable: { type: 'string' },
                 array_variable: {
                     type: 'array',
                     skip_xform: true,
@@ -151,9 +151,9 @@ describe('Template class tests', function () {
                         type: 'string'
                     }
                 },
-                boolean_variable: { type: 'boolean', default: false },
-                number_variable: { type: 'number', default: 0 },
-                hidden_variable: { type: 'string', format: 'hidden', default: '' }
+                boolean_variable: { type: 'boolean' },
+                number_variable: { type: 'number' },
+                hidden_variable: { type: 'string', format: 'hidden' }
             },
             required: [
                 'variable1',

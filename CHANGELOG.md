@@ -6,7 +6,8 @@
 
 ## Changed
 * ResourceCache: Improve cache utilization for concurrent requests
-* template: Do not mark properties with supplied defaults as required
+* template: Do not mark properties with defaults as required
+* template: Do not automatically supply default values for primitive types
 
 # v0.13.0
 ## Added
