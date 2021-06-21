@@ -3,6 +3,7 @@
 * template: Fix merging array items definitions with custom types
 * template: Fix over-aggressive cleaning of definitions referenced in "items" keyword
 * template: Fix losing definitions from merged in templates
+* template: Fix missing description when merging templates
 
 ## Changed
 * ResourceCache: Improve cache utilization for concurrent requests
