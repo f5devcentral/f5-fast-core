@@ -1,3 +1,11 @@
+# v0.15.0
+## Added
+
+## Fixed
+
+## Changed
+* template: Merge duplicate section definitions instead of overwriting
+
 # v0.14.0
 ## Fixed
 * template: Fix merging array items definitions with custom types

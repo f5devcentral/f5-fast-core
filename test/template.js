@@ -381,6 +381,25 @@ describe('Template class tests', function () {
                 assert.deepStrictEqual(schema.properties.foo.invertDependency, ['section']);
             });
     });
+    it('schema_sections_merge', function () {
+        const ymldata = `
+            template: |
+                {{#section}}{{foo}}{{/section}}
+                {{#section}}{{bar}}{{/section}}
+                {{^section}}{{baz}}{{/section}}
+        `;
+
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                console.log(JSON.stringify(schema, null, 2));
+
+                const itemProps = schema.properties.section.items.properties;
+                assert.ok(itemProps.foo);
+                assert.ok(itemProps.bar);
+                assert(typeof itemProps.baz === 'undefined');
+            });
+    });
     it('schema_x_of', function () {
         const ymldata = fs.readFileSync(`${templatesPath}/combine.yml`, 'utf8');
         return Template.loadYaml(ymldata)
