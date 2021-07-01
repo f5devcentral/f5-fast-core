@@ -400,6 +400,22 @@ describe('Template class tests', function () {
                 assert(typeof itemProps.baz === 'undefined');
             });
     });
+    it('schema_sections_merge_bad', function () {
+        const ymldata = `
+            template: |
+                {{#section}}{{foo}}{{/section}}
+                {{#section}}{{.}}{{/section}}
+        `;
+
+        return Template.loadYaml(ymldata)
+            .then(() => {
+                assert(false, 'should have failed to merge definitions');
+            })
+            .catch((e) => {
+                console.log(e.message);
+                assert.match(e.message, /attempted to redefine section/);
+            });
+    });
     it('schema_x_of', function () {
         const ymldata = fs.readFileSync(`${templatesPath}/combine.yml`, 'utf8');
         return Template.loadYaml(ymldata)
