@@ -1,8 +1,4 @@
 # v0.15.0
-## Added
-
-## Fixed
-
 ## Changed
 * template: Merge duplicate section definitions instead of overwriting
 
