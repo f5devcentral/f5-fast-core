@@ -287,6 +287,40 @@ fast.Template.loadYaml(yamldata)
     .then(template => template.forwardHttp()); // POST "foo" to http://example.com/resource
 ```
 
+### Template Data Files
+
+Sometimes it is desirable to keep a portion of a template in a separate file and include it into the template text.
+This can be done with parameters and the `dataFile` property:
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const templatesPath = '/path/to/templatesdir'; // directory containing example.data
+const dataProvider = new fast.FsDataProvider(templatesPath);
+const yamldata = `
+    definitions:
+        var:
+            dataFile: example
+    template: |
+        {{var}}
+`;
+
+fast.Template.loadYaml(yamldata, { dataProvider })
+    .then((template) => {
+        console.log(template.getParametersSchema());
+        console.log(template.render({virtual_port: 443});
+    });
+```
+The `FsDataProvider` will pick up on any files with the `.data` extension in the template set directory.
+When referencing the file in a template, use the filename (without the extension) as a key.
+
+Parameters with a `dataFile` property:
+
+* are removed from `required`
+* have their `default` set to the contents of the file
+* given a default `format` of `hidden`
+
+
 ## Development
 
 * To check for lint errors run `npm run lint` 

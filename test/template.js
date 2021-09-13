@@ -25,6 +25,7 @@ const nock = require('nock');
 const yaml = require('js-yaml');
 
 const FsSchemaProvider = require('../lib/schema_provider').FsSchemaProvider;
+const FsDataProvider = require('../lib/data_provider').FsDataProvider;
 const Template = require('../lib/template').Template;
 
 const templatesPath = './test/templatesets/test';
@@ -1246,6 +1247,32 @@ describe('Template class tests', function () {
                 assert.ok(schema.properties.input_b);
                 console.log(schema);
                 const rendered = tmpl.render(view).trim();
+                console.log(rendered);
+                assert.strictEqual(rendered, reference);
+            });
+    });
+    it('data_file', function () {
+        const dataProvider = new FsDataProvider(templatesPath);
+        const yamldata = `
+            definitions:
+                fromFile:
+                    dataFile: textData.txt
+            template: |-
+                {{fromFile}}
+        `;
+        const reference = 'Lorem ipsum\n';
+        return Template.loadYaml(yamldata, { dataProvider })
+            .then((tmpl) => {
+                const schema = tmpl.getParametersSchema();
+                const fileProp = schema.properties.fromFile;
+
+                console.log(JSON.stringify(schema, null, 2));
+
+                assert(!schema.required.includes('fromFile'), 'definition with "file" property should not be required');
+                assert.strictEqual(fileProp.format, 'hidden');
+                assert.strictEqual(fileProp.default, 'Lorem ipsum\n');
+
+                const rendered = tmpl.render();
                 console.log(rendered);
                 assert.strictEqual(rendered, reference);
             });
