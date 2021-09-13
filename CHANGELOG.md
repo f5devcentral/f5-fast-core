@@ -1,3 +1,7 @@
+# v0.19.0
+## Added
+template: Add dataFile parameter property for including arbitrary text from files
+
 # v0.18.0
 ## Added
 * Add a GitHubSchemaProvider and GitHubTemplateProvider

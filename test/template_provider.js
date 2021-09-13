@@ -78,6 +78,7 @@ function runSharedTests(createProvider) {
                 assert.strictEqual(schema.description, '');
                 assert.strictEqual(tmpl.target, 'as3');
                 assert.ok(tmpl._partials.chatlog);
+                assert.strictEqual(schema.properties.fromFile.default, 'Lorem ipsum\n');
             });
     });
     it('load_single_with_schema', function () {
