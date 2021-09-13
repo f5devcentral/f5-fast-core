@@ -320,6 +320,16 @@ Parameters with a `dataFile` property:
 * have their `default` set to the contents of the file
 * given a default `format` of `hidden`
 
+Additionally, the contents of the data file can be base64 encoded before being used as for `default` by setting the `base64` property to `true`:
+
+```yaml
+definitions:
+    var:
+        dataFile: example
+        base64: true
+    template: |
+        {{var}}
+```
 
 ## Development
 
