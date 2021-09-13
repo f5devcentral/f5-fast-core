@@ -1,3 +1,7 @@
+# v0.16.0
+## Fixed
+* schema_provider: Fix loading schema files with a '.' in the filename 
+
 # v0.15.0
 ## Changed
 * template: Merge duplicate section definitions instead of overwriting
