@@ -1257,10 +1257,14 @@ describe('Template class tests', function () {
             definitions:
                 fromFile:
                     dataFile: textData.txt
+                base64:
+                    dataFile: textData.txt
+                    base64: true
             template: |-
                 {{fromFile}}
+                {{base64}}
         `;
-        const reference = 'Lorem ipsum\n';
+        const reference = 'Lorem ipsum\n\nTG9yZW0gaXBzdW0K';
         return Template.loadYaml(yamldata, { dataProvider })
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
@@ -1271,6 +1275,8 @@ describe('Template class tests', function () {
                 assert(!schema.required.includes('fromFile'), 'definition with "file" property should not be required');
                 assert.strictEqual(fileProp.format, 'hidden');
                 assert.strictEqual(fileProp.default, 'Lorem ipsum\n');
+
+                assert.strictEqual(schema.properties.base64.default, 'TG9yZW0gaXBzdW0K');
 
                 const rendered = tmpl.render();
                 console.log(rendered);
