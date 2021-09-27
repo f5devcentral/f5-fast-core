@@ -465,11 +465,16 @@ describe('Template class tests', function () {
                         properties:
                             propA:
                                 default: a
+                sectionProp:
+                    type: boolean
+                    default: true
             template: |-
                 {{foo}}{{bar}}
                 {{#arrayProp}}
                     {{propA}}{{propB}}
                 {{/arrayProp}}
+                {{#sectionProp}}
+                {{/sectionProp}}
         `;
 
         return Template.loadYaml(ymldata)

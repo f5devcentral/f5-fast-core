@@ -1,6 +1,7 @@
 # v0.16.0
 ## Fixed
 * schema_provider: Fix loading schema files with a '.' in the filename 
+* template: Fix parameters from Mustache sections getting listed as required even if they have a default value
 
 # v0.15.0
 ## Changed
