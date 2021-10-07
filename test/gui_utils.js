@@ -203,7 +203,15 @@ describe('GUI utils test', function () {
                 {
                     properties: {
                         baz: { type: 'integer' }
-                    }
+                    },
+                    anyOf: [
+                        {},
+                        {
+                            properties: {
+                                nested: { type: 'integer' }
+                            }
+                        }
+                    ]
                 }
             ]
         };
@@ -211,9 +219,10 @@ describe('GUI utils test', function () {
         console.log(JSON.stringify(schema, null, 2));
 
         assert.ok(schema.properties.baz);
+        assert.ok(schema.properties.nested);
 
         // Order fixes
-        const expectedOrder = ['showFirst', 'foo', 'baz'];
+        const expectedOrder = ['showFirst', 'foo', 'baz', 'nested'];
         const actualOrder = Object.keys(schema.properties).sort((a, b) => (
             schema.properties[a].propertyOrder - schema.properties[b].propertyOrder
         ));
