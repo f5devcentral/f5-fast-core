@@ -22,19 +22,22 @@
     "fast": "./cli.js"
   },
   "devDependencies": {
-    "@f5devcentral/eslint-config-f5-atg": "^0.1.1",
+    "@f5devcentral/eslint-config-f5-atg": "^0.1.5",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^7.26.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.2",
     "mocha": "^8.4.0",
-    "nock": "^13.0.11",
+    "nock": "^13.1.4",
     "nyc": "^15.1.0",
     "pkg": "^4.5.1"
   },
   "eslintConfig": {
     "extends": "@f5devcentral/eslint-config-f5-atg",
     "rules": {
-      "no-control-regex": "off"
+      "no-control-regex": "off",
+      "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
+      "max-classes-per-file": "off"
     },
     "parserOptions": {
       "ecmaVersion": 8
@@ -50,15 +53,15 @@
     ]
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.7",
+    "@apidevtools/json-schema-ref-parser": "^9.0.9",
     "@f5devcentral/atg-storage": "^1.1.0",
-    "adm-zip": "^0.5.5",
+    "adm-zip": "^0.5.9",
     "ajv": "^6.12.6",
-    "axios": "^0.21.0",
+    "axios": "^0.21.4",
     "deepmerge": "^4.2.2",
     "js-yaml": "^4.1.0",
     "jsonpath-plus": "^4.0.0",
-    "math-expression-evaluator": "^1.3.7",
+    "math-expression-evaluator": "^1.3.8",
     "merge-lite": "^1.0.2",
     "mustache": "^4.2.0",
     "yargs": "^16.2.0"

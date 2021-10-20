@@ -27,7 +27,6 @@ const yaml = require('js-yaml');
 const FsSchemaProvider = require('../lib/schema_provider').FsSchemaProvider;
 const Template = require('../lib/template').Template;
 
-
 const templatesPath = './test/templatesets/test';
 
 const mstWithTypes = `{

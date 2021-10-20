@@ -167,7 +167,6 @@ const packageTemplateSet = (tsPath, dst) => validateTemplateSet(tsPath)
             });
     });
 
-
 /* eslint-disable-next-line no-unused-expressions */
 require('yargs')
     .command('validate <file>', 'validate given template source file', (yargs) => {

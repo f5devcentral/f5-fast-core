@@ -23,7 +23,6 @@ const assert = require('assert');
 
 const TransactionLogger = require('../lib/transaction_logger');
 
-
 describe('TransactionLogger', function () {
     describe('Init', function () {
         it('should provide default callbacks', function () {
