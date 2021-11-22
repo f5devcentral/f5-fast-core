@@ -110,6 +110,32 @@ describe('GUI utils test', function () {
         // Preserve top-level title
         assert.strictEqual(schema.title, 'top level');
     });
+    it('all_of_defaults', function () {
+        let schema = {
+            title: 'extended',
+            properties: {
+                port: {
+                    default: 45
+                }
+            },
+            allOf: [
+                {
+                    title: 'base',
+                    properties: {
+                        port: {
+                            type: 'integer',
+                            default: 443
+                        }
+                    }
+                }
+            ]
+        };
+        schema = guiUtils.modSchemaForJSONEditor(schema);
+        console.log(JSON.stringify(schema, null, 2));
+
+        const props = schema.properties;
+        assert.strictEqual(props.port.default, 45);
+    });
     it('all_of_merge_dependencies', function () {
         let schema = {
             type: 'object',

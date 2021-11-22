@@ -1,3 +1,7 @@
+# v0.17.0
+## Fixed
+* guiUtils: Prefer defaults from top-level templates when merging allOf templates
+
 # v0.16.0
 ## Fixed
 * schema_provider: Fix loading schema files with a '.' in the filename 
