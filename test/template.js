@@ -385,6 +385,7 @@ describe('Template class tests', function () {
             template: |
                 {{#section}}{{foo}}{{/section}}
                 {{#section}}{{bar}}{{/section}}
+                {{#section}}{{foo}}{{/section}}
                 {{^section}}{{baz}}{{/section}}
         `;
 

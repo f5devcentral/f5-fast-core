@@ -1,6 +1,7 @@
 # v0.17.0
 ## Fixed
 * guiUtils: Prefer defaults from top-level templates when merging allOf templates
+* template: Fix duplicate items in required property when merging sections (issue #23)
 
 # v0.16.0
 ## Fixed
