@@ -70,6 +70,6 @@
     "math-expression-evaluator": "^1.3.8",
     "merge-lite": "^1.0.2",
     "mustache": "^4.2.0",
-    "yargs": "^16.2.0"
+    "yargs": "^17.3.0"
   }
 }
