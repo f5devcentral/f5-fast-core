@@ -74,12 +74,10 @@ describe('schema provider tests', function () {
         const createDataStore = () => new StorageMemory({
             test: {
                 templates: {},
-                schemas: fs.readdirSync(`${schemasPath}`).filter(x => x.endsWith('.json')).reduce(
-                    (acc, fname) => {
-                        acc[fname.slice(0, -5)] = fs.readFileSync(`${schemasPath}/${fname}`, { encoding: 'utf8' });
-                        return acc;
-                    }, {}
-                )
+                schemas: fs.readdirSync(`${schemasPath}`).filter(x => x.endsWith('.json')).reduce((acc, fname) => {
+                    acc[fname.slice(0, -5)] = fs.readFileSync(`${schemasPath}/${fname}`, { encoding: 'utf8' });
+                    return acc;
+                }, {})
             }
         });
         runSharedTests(() => new DataStoreSchemaProvider(createDataStore(), 'test'));
