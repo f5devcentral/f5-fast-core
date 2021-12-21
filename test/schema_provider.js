@@ -20,6 +20,7 @@
 'use strict';
 
 const fs = require('fs');
+const nock = require('nock');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
@@ -28,6 +29,8 @@ const assert = chai.assert;
 
 const StorageMemory = require('@f5devcentral/atg-storage').StorageMemory;
 const { FsSchemaProvider, DataStoreSchemaProvider } = require('../lib/schema_provider');
+const { GitHubSchemaProvider } = require('../lib/github_provider');
+const { nockGitHubAPI } = require('./githubMock');
 
 const schemasPath = './test/templatesets/test/';
 
@@ -88,5 +91,19 @@ describe('schema provider tests', function () {
                 assert.isRejected(provider.fetch('f5'))
             ]);
         });
+    });
+
+    describe('GitHubSchemaProvider', function () {
+        const repo = 'f5-test/f5-fast-test-templatesets';
+        before(() => nockGitHubAPI(repo, './test/templatesets'));
+        after(() => nock.cleanAll());
+
+        runSharedTests(() => new GitHubSchemaProvider(
+            repo,
+            'test',
+            {
+                apiToken: 'secret'
+            }
+        ));
     });
 });

@@ -24,6 +24,7 @@ const {
     FsSingleTemplateProvider,
     DataStoreTemplateProvider
 } = require('./lib/template_provider');
+const { GitHubTemplateProvider, GitHubSchemaProvider } = require('./lib/github_provider');
 const { Template, mergeStrategies, postProcessStrategies } = require('./lib/template');
 const guiUtils = require('./lib/gui_utils');
 const TransactionLogger = require('./lib/transaction_logger');
@@ -34,6 +35,8 @@ module.exports = {
     FsTemplateProvider,
     FsSingleTemplateProvider,
     DataStoreTemplateProvider,
+    GitHubTemplateProvider,
+    GitHubSchemaProvider,
     Template,
     mergeStrategies,
     postProcessStrategies,

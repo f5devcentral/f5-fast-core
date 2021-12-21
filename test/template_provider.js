@@ -19,6 +19,7 @@
 
 'use strict';
 
+const nock = require('nock');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
@@ -31,6 +32,9 @@ const {
     FsSingleTemplateProvider,
     DataStoreTemplateProvider
 } = require('../lib/template_provider');
+
+const { GitHubTemplateProvider } = require('../lib/github_provider');
+const { nockGitHubAPI } = require('./githubMock');
 
 const templatesPath = './test/templatesets';
 
@@ -224,5 +228,20 @@ describe('template provider tests', function () {
             const provider = createProvider();
             return assert.isRejected(provider.removeSet('does_not_exist'), /failed to find template set/);
         });
+    });
+    describe('GitHubTemplateProvider', function () {
+        const repo = 'f5-test/f5-fast-test-templatesets';
+        before(() => nockGitHubAPI(repo, './test/templatesets'));
+        after(() => nock.cleanAll());
+
+        runSharedTests(
+            filtered => new GitHubTemplateProvider(
+                repo,
+                {
+                    filteredSets: filtered,
+                    apiToken: 'secret'
+                }
+            )
+        );
     });
 });
