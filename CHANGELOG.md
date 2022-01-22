@@ -1,3 +1,12 @@
+# v0.18.0
+## Added
+* Add a GitHubSchemaProvider and GitHubTemplateProvider
+
+## Changed
+* Updated dependencies
+* Stop pulling in pkg as a dev dependency
+* Expose BaseTemplateProvider class
+
 # v0.17.0
 ## Fixed
 * guiUtils: Prefer defaults from top-level templates when merging allOf templates
