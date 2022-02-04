@@ -1259,12 +1259,21 @@ describe('Template class tests', function () {
                     dataFile: textData.txt
                 base64:
                     dataFile: textData.txt
-                    base64: true
+                    toBase64: true
+                decoded:
+                    dataFile: textData.txt
+                    fromBase64: true
+                toAndFrom:
+                    dataFile: textData.txt
+                    toBase64: true
+                    fromBase64: true
             template: |-
                 {{fromFile}}
                 {{base64}}
+                {{decoded}}
+                {{toAndFrom}}
         `;
-        const reference = 'Lorem ipsum\n\nTG9yZW0gaXBzdW0K';
+        const reference = 'Lorem ipsum\n\nTG9yZW0gaXBzdW0K\n.�ޚ*l�\nTG9yZW0gaXBzdW0K';
         return Template.loadYaml(yamldata, { dataProvider })
             .then((tmpl) => {
                 const schema = tmpl.getParametersSchema();
@@ -1277,6 +1286,8 @@ describe('Template class tests', function () {
                 assert.strictEqual(fileProp.default, 'Lorem ipsum\n');
 
                 assert.strictEqual(schema.properties.base64.default, 'TG9yZW0gaXBzdW0K');
+                assert.strictEqual(schema.properties.decoded.default, '.�ޚ*l�');
+                assert.strictEqual(schema.properties.toAndFrom.default, 'TG9yZW0gaXBzdW0K');
 
                 const rendered = tmpl.render();
                 console.log(rendered);
