@@ -71,6 +71,13 @@ describe('schema provider tests', function () {
                 assert.isRejected(provider.fetch('f5'))
             ]);
         });
+
+        it('schema_path_alias', function () {
+            const provider = new FsSchemaProvider(schemasPath);
+
+            provider.schema_path = 'foo';
+            assert.strictEqual(provider.schemaPath, provider.schema_path);
+        });
     });
 
     describe('DataStoreSchemaProvider', function () {
