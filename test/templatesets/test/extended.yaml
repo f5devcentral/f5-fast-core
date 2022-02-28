@@ -1,0 +1,12 @@
+title: Main template
+contentType: application/json
+allOf:
+    - $ref: "base.yaml#"
+definitions:
+    extraData:
+        title: Something Extra
+        description: This is in addition to the base template
+template: |
+    {
+        "extraData": "{{extraData}}"
+    }
