@@ -48,8 +48,10 @@ function runSharedTests(createProvider) {
         return provider.list()
             .then((tmplList) => {
                 assert.deepStrictEqual(tmplList.sort(), [
+                    'test/base',
                     'test/combine',
                     'test/complex',
+                    'test/extended',
                     'test/simple',
                     'test/simple_udp'
                 ]);
@@ -86,9 +88,19 @@ function runSharedTests(createProvider) {
         return provider.fetch('test/simple')
             .then((tmpl) => {
                 assert.ok(tmpl);
-                console.log(JSON.stringify(tmpl, null, 3));
+                console.log(JSON.stringify(tmpl, null, 2));
                 assert.strictEqual(tmpl.title, 'Simple YAML file');
                 assert.strictEqual(tmpl.target, 'as3');
+            });
+    });
+    it('load_sub_template', function () {
+        const provider = createProvider();
+        return provider.fetch('test/extended')
+            .then((tmpl) => {
+                assert.ok(tmpl);
+                console.log(JSON.stringify(tmpl, null, 2));
+                assert.strictEqual(tmpl.title, 'Main template');
+                assert.strictEqual(tmpl._allOf[0].title, 'Base Template');
             });
     });
     it('load_single_bad', function () {
@@ -114,11 +126,11 @@ function runSharedTests(createProvider) {
         const provider = createProvider();
         return assert.becomes(provider.getNumTemplateSourceTypes('test'), {
             MST: 1,
-            YAML: 3
+            YAML: 5
         })
             .then(() => assert.becomes(provider.getNumTemplateSourceTypes(), {
                 MST: 1,
-                YAML: 3
+                YAML: 5
             }));
     });
     it('num_schemas', function () {
@@ -147,13 +159,17 @@ function runSharedTests(createProvider) {
 
                 const tmplNames = setData.templates.map(x => x.name).sort();
                 assert.deepStrictEqual(tmplNames, [
+                    'test/base',
                     'test/combine',
                     'test/complex',
+                    'test/extended',
                     'test/simple',
                     'test/simple_udp'
                 ]);
                 const tmplDesc = setData.templates.map(x => x.description).sort();
                 assert.deepStrictEqual(tmplDesc, [
+                    '',
+                    '',
                     '',
                     'A simple template to test we can handle the .yaml file extension',
                     'An example of how to combine templates',

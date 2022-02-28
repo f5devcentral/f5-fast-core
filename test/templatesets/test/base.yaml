@@ -1,0 +1,21 @@
+title: Base Template
+contentType: application/json
+definitions:
+    name:
+        title: Object Name
+        description: Give this thing a great name!
+        minLength: 1
+    description:
+        title: Object Description
+        description: What is this object about? (can be empty)
+    number:
+        title: Number please!
+        description: A number would be grand, but please be positive.
+        minimum: 0
+template: |
+    {
+        "name": "{{name}}",
+        "description": "{{description}}",
+        "integer": {{number::integer}},
+        "port": {{port:types:port}}
+    }
