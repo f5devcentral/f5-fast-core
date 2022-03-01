@@ -1,6 +1,9 @@
 # v0.19.0
 ## Added
-template: Add dataFile parameter property for including arbitrary text from files
+* template: Add dataFile parameter property for including arbitrary text from files
+
+## Fixed
+* Fix loading sub-templates with GitHubTemplateProvider
 
 # v0.18.0
 ## Added
