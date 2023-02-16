@@ -30,7 +30,8 @@ const StorageMemory = require('@f5devcentral/atg-storage').StorageMemory;
 const {
     FsTemplateProvider,
     FsSingleTemplateProvider,
-    DataStoreTemplateProvider
+    DataStoreTemplateProvider,
+    CompositeTemplateProvider
 } = require('../lib/template_provider');
 
 const { GitHubTemplateProvider } = require('../lib/github_provider');
@@ -226,6 +227,7 @@ describe('template provider tests', function () {
     describe('DataStoreTemplateProvider', function () {
         const testStorage = new StorageMemory();
         before(function () {
+            testStorage.data = {};
             return DataStoreTemplateProvider.fromFs(testStorage, templatesPath);
         });
         const createProvider = filtered => new DataStoreTemplateProvider(testStorage, filtered);
@@ -259,6 +261,20 @@ describe('template provider tests', function () {
                     apiToken: 'secret'
                 }
             )
+        );
+    });
+    describe('CompositeTemplateProvider', function () {
+        const testStorage = new StorageMemory();
+        before(function () {
+            testStorage.data = {};
+            return DataStoreTemplateProvider.fromFs(testStorage, templatesPath);
+        });
+
+        runSharedTests(
+            filtered => new CompositeTemplateProvider([
+                new FsTemplateProvider(templatesPath, filtered),
+                new DataStoreTemplateProvider(testStorage, filtered)
+            ])
         );
     });
 });
