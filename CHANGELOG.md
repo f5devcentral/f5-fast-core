@@ -1,3 +1,10 @@
+# v0.20.0
+## Added
+* Add a CompositeTemplateProvider to aggregate results from multiple template providers
+
+## Changed
+* Update dependencies
+
 # v0.19.1
 ## Changed
 * Update dependencies
