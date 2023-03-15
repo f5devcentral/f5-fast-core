@@ -1,3 +1,7 @@
+# v0.20.1
+## Changed
+* Locked json-schema-ref-parser dependency to 9.0.9 (9.1.x is breaking template loading)
+
 # v0.20.0
 ## Added
 * Add a CompositeTemplateProvider to aggregate results from multiple template providers

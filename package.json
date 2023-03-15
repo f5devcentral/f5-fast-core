@@ -58,7 +58,7 @@
     ]
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.1.2",
+    "@apidevtools/json-schema-ref-parser": "9.0.9",
     "@f5devcentral/atg-storage": "^1.3.7",
     "adm-zip": "^0.5.10",
     "ajv": "^6.12.6",
