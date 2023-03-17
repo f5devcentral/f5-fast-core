@@ -22,7 +22,8 @@ const {
     BaseTemplateProvider,
     FsTemplateProvider,
     FsSingleTemplateProvider,
-    DataStoreTemplateProvider
+    DataStoreTemplateProvider,
+    CompositeTemplateProvider
 } = require('./lib/template_provider');
 const { GitHubTemplateProvider, GitHubSchemaProvider } = require('./lib/github_provider');
 const { Template, mergeStrategies, postProcessStrategies } = require('./lib/template');
@@ -35,6 +36,7 @@ module.exports = {
     FsTemplateProvider,
     FsSingleTemplateProvider,
     DataStoreTemplateProvider,
+    CompositeTemplateProvider,
     GitHubTemplateProvider,
     GitHubSchemaProvider,
     Template,
