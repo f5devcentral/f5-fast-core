@@ -210,6 +210,20 @@ templateProvider.fetch('templateSet/templateName')
     });
 ```
 
+Calculate the hash of a local Template Set with  `FsSingleTemplateProvider` like this:
+
+```javascript
+const fast = require('@f5devcentral/f5-fast-core');
+
+const templateSetPath = '/path/to/templateSet';
+const templateProvider = new fast.FsSingleTemplateProvider(templateSetPath);
+
+templateProvider.getSetData('templateSetName')
+    .then((tsData) => {
+        console.log(tsData.hash)
+    });
+```
+
 Note that despite loading a single template set, a template set name must still be provided when querying the provider.
 
 ### HTTP Fetch
