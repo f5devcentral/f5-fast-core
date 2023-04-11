@@ -6,6 +6,10 @@
 
 This module provides a framework for handling templates.
 
+## Documentation
+
+Documentation for BIG-IP FAST Core can be found [here](docs/README.md).
+
 ## Features
 
 * Parses Mustache templates and an extended template format (in YAML)
