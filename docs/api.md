@@ -29,6 +29,8 @@ fast.Template.loadYaml(yamldata)
     });
 ```
 
+> **Note:** If the example above were saved in a file named simpleLoading.js, then you could run it from the CLI with this command: `node simpleLoading.js`
+
 If a `Template` has been serialized to JSON (e.g., to send in an HTTP request), it can be deserialized with `Template.fromJson()`:
 
 ```javascript
