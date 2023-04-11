@@ -110,4 +110,4 @@ templateProvider.getSetData('templateSetName')
     });
 ```
 
->**Note:**  Despite loading a single template set, a template set name must still be provided when querying the provider.
+> **Note:**  Despite loading a single template set, a template set name must still be provided when querying the provider.
