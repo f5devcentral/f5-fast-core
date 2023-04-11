@@ -1,5 +1,13 @@
 # Getting Started
 
+## Installation
+
+To install this module run:
+
+```bash
+npm install @f5devcentral/f5-fast-core
+```
+
 ## CLI
 
 A command line interface is provided via a `fast` binary.
