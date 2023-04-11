@@ -72,12 +72,13 @@ Instead, the message indicating that members is missing or false will display in
 
 Template:
 ```yaml
+template: |
   Members:
   {{#members}} 
     "{{ . }}",
-  {{/members}
+  {{/members}}
   {{^members}}
-    "No members exist.",
+    "No members exist."
   {{/members}}
 ```
 
@@ -88,7 +89,7 @@ Parameters:
 
 Output:
 ```
-  Members
+  Members:
     No members exist.
 ```
 
@@ -107,10 +108,10 @@ Parameters:
 
 Output:
 ```
-  Members
-    10.0.0.1
-    10.0.0.2
-    10.0.0.3
+  Members:
+    10.0.0.1,
+    10.0.0.2,
+    10.0.0.3,
 ```
 
 
