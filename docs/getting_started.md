@@ -74,3 +74,44 @@ When FAST renders it is doing string replacement via Mustache, which is agnostic
 * Post-processing steps (e.g., strip dangling commas for JSON)
 * Smarter merges
 * Smarter handling of some data types
+
+Here is an example of using application/json for the content type:
+
+Template:
+```yaml
+title: Members in JSON List
+contentType: application/json
+template: |
+  {
+    "members": [
+      {{#members}} 
+        { "ipAddr": "{{ . }}" },
+      {{/members}}
+    ]
+  }
+```
+
+Parameters:
+```yaml
+  members: 
+    - 10.0.0.1
+    - 10.0.0.2
+    - 10.0.0.3
+```
+
+Output:
+```
+  {
+    "members": [
+      {
+        "ipAddr": "10.0.0.1"
+      },
+      {
+        "ipAddr": "10.0.0.2"
+      },
+      {
+        "ipAddr": "10.0.0.3"
+      }
+    ]
+  }
+```
