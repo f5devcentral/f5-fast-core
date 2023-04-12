@@ -546,6 +546,28 @@ describe('Template class tests', function () {
                 assert.strictEqual(tmpl.render(view), reference);
             });
     });
+    it('render_section_as_object', function () {
+        const ymldata = `
+            contentType: application/json
+            definitions:
+                obj:
+                    type: object
+            template: |-
+                {{#obj}}{ "prop": {{prop}}}{{/obj}}
+        `;
+        const parameters = {
+            obj: {
+                prop: 'foo'
+            }
+        };
+        const reference = '{\n  "prop": "foo"\n}';
+
+        return Template.loadYaml(ymldata)
+            .then((tmpl) => {
+                console.log(tmpl.getParametersSchema());
+                assert.strictEqual(tmpl.render(parameters), reference);
+            });
+    });
     it('render_section_with_partial', function () {
         const ymldata = `
             parameters:
