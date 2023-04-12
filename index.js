@@ -26,7 +26,9 @@ const {
     CompositeTemplateProvider
 } = require('./lib/template_provider');
 const { GitHubTemplateProvider, GitHubSchemaProvider } = require('./lib/github_provider');
-const { Template, mergeStrategies, postProcessStrategies } = require('./lib/template');
+const {
+    Template, mergeStrategies, postProcessStrategies, transformStrategies
+} = require('./lib/template');
 const guiUtils = require('./lib/gui_utils');
 const TransactionLogger = require('./lib/transaction_logger');
 
@@ -42,6 +44,7 @@ module.exports = {
     Template,
     mergeStrategies,
     postProcessStrategies,
+    transformStrategies,
     guiUtils,
     dataStores,
     TransactionLogger
