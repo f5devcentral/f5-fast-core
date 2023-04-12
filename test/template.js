@@ -526,7 +526,7 @@ describe('Template class tests', function () {
                 {{> numbpartial}}
                 {{> arraypartial}}
         `;
-        const reference = 'numb=5\narr=["1","2"]\n';
+        const reference = 'numb=5\narr=1,2\n';
         return Template.loadYaml(ymldata)
             .then((tmpl) => {
                 assert.strictEqual(tmpl.render(), reference);
@@ -604,22 +604,24 @@ describe('Template class tests', function () {
                 assert.strictEqual(schema.properties.virtual_port.type, 'integer');
             });
     });
-    it('render_array', function () {
+    it('render_json_array', function () {
         const mstdata = '{{values::array}}';
         const parameters = { values: ['1', '2', '3'] };
-        const reference = '["1","2","3"]';
+        const reference = '[\n  "1",\n  "2",\n  "3"\n]';
         return Template.loadMst(mstdata)
             .then((tmpl) => {
+                tmpl.contentType = 'application/json';
                 console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
                 assert.strictEqual(tmpl.render(parameters), reference);
             });
     });
-    it('render_text', function () {
+    it('render_json_text', function () {
         const mstdata = '{{textvar::text}}';
         const parameters = { textvar: 'multi\nline' };
         const reference = '"multi\\nline"';
         return Template.loadMst(mstdata)
             .then((tmpl) => {
+                tmpl.contentType = 'application/json';
                 console.log(JSON.stringify(tmpl.getParametersSchema(), null, 2));
                 assert.strictEqual(tmpl.render(parameters), reference);
             });
