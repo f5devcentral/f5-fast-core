@@ -1,3 +1,14 @@
+# v0.21.0
+## Added
+* template: Allow customizing input transform behavior via fast.transformStrategies
+
+## Fixed
+* Fix undefined fast.postProcessStrategies
+* template: Fix using an object parameter as input to a section
+
+## Changed
+* template: JsonTransformStrategy is now only used for 'application/json' contentType
+
 # v0.20.2
 ## Fixed
 * Add CompositeTemplateProvider to index
