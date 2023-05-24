@@ -112,6 +112,7 @@ describe('Template class tests', function () {
                 return Template.fromJson(JSON.stringify(tmpl));
             })
             .then((jsontmpl) => {
+                tmpl.contentType = 'application/json';
                 delete jsontmpl._parametersValidator;
                 delete tmpl._parametersValidator;
                 assert.deepEqual(jsontmpl, tmpl);
@@ -125,6 +126,7 @@ describe('Template class tests', function () {
                 return Template.fromJson(JSON.parse(JSON.stringify(tmpl)));
             })
             .then((jsontmpl) => {
+                tmpl.contentType = 'application/json';
                 delete jsontmpl._parametersValidator;
                 delete tmpl._parametersValidator;
                 assert.deepEqual(jsontmpl, tmpl);
