@@ -27,6 +27,52 @@ const Template = require('./lib/template').Template;
 const FsTemplateProvider = require('./lib/template_provider').FsTemplateProvider;
 const guiUtils = require('./lib/gui_utils');
 
+let logger = null;
+const setLogger = (argv) => {
+    const jsonOutput = argv.jsonOutput;
+
+    if (jsonOutput) {
+        logger = {
+            isJSON: true,
+            output: {},
+            log: (msg) => {
+                if (typeof logger.output.result === 'undefined') {
+                    logger.output.result = msg;
+                } else {
+                    logger.output.result += `\n${msg}`;
+                }
+            },
+            error: (msg) => {
+                if (typeof logger.output.error === 'undefined') {
+                    logger.output.error = msg;
+                } else {
+                    logger.output.error += `\n${msg}`;
+                }
+            }
+        };
+        process.on('exit', () => {
+            const msg = JSON.stringify(logger.output);
+            console.log(msg);
+        });
+    } else {
+        logger = {
+            isJSON: false,
+            log: (msg) => {
+                if (typeof msg === 'object') {
+                    msg = JSON.stringify(msg, null, 2);
+                }
+                console.log(msg);
+            },
+            error: (msg) => {
+                if (typeof msg === 'object') {
+                    msg = JSON.stringify(msg, null, 2);
+                }
+                console.error(msg);
+            }
+        };
+    }
+};
+
 const loadTemplate = (templatePath) => {
     const tmplName = path.basename(templatePath, path.extname(templatePath));
     const tsName = path.basename(path.dirname(templatePath));
@@ -36,9 +82,9 @@ const loadTemplate = (templatePath) => {
         .catch((e) => {
             const validationErrors = Template.getValidationErrors();
             if (validationErrors !== 'null') {
-                console.error(validationErrors);
+                logger.error(validationErrors);
             }
-            console.error(`failed to load template\n${e.stack}`);
+            logger.error(`failed to load template\n${e.stack}`);
             process.exit(1);
         });
 };
@@ -48,7 +94,7 @@ const loadParameters = (parametersPath) => {
     return fs.readFile(parametersPath, 'utf8')
         .then(paramsData => yaml.load(paramsData))
         .catch((e) => {
-            console.error(`Failed to load the parameters file:\n${e.stack}`);
+            logger.error(`Failed to load the parameters file:\n${e.stack}`);
             process.exit(1);
         });
 };
@@ -60,16 +106,16 @@ const loadTemplateAndParameters = (templatePath, parametersPath) => Promise.all(
 
 const validateTemplate = templatePath => loadTemplate(templatePath)
     .then(() => {
-        console.log(`template source at ${templatePath} is valid`);
+        logger.log(`template source at ${templatePath} is valid`);
     });
 
 const templateToParametersSchema = templatePath => loadTemplate(templatePath)
     .then((tmpl) => {
         const schema = tmpl.getParametersSchema();
-        console.log(JSON.stringify(schema, null, 2));
+        logger.log(schema);
     })
     .catch((e) => {
-        console.error(`Failed to generate schema:\n${e.stack}`);
+        logger.error(`Failed to generate schema:\n${e.stack}`);
         process.exit(1);
     });
 
@@ -77,10 +123,10 @@ const templateToParametersSchemaGui = templatePath => loadTemplate(templatePath)
     .then((tmpl) => {
         let schema = tmpl.getParametersSchema();
         schema = guiUtils.modSchemaForJSONEditor(schema);
-        console.log(JSON.stringify(schema, null, 2));
+        logger.log(schema);
     })
     .catch((e) => {
-        console.error(`Failed to generate schema:\n${e.stack}`);
+        logger.error(`Failed to generate schema:\n${e.stack}`);
         process.exit(1);
     });
 
@@ -88,7 +134,7 @@ const validateParamData = (tmpl, parameters) => {
     try {
         tmpl.validateParameters(parameters);
     } catch (e) {
-        console.error(e.stack);
+        logger.error(e.stack);
         process.exit(1);
     }
 };
@@ -98,7 +144,7 @@ const validateParameters = (templatePath, parametersPath) => loadTemplateAndPara
         validateParamData(tmpl, parameters);
     })
     .catch((e) => {
-        console.error(e.stack);
+        logger.error(e.stack);
         process.exit(1);
     });
 
@@ -109,10 +155,21 @@ const renderTemplate = (templatePath, parametersPath) => loadTemplateAndParamete
             .then(httpParams => Object.assign({}, parameters, httpParams))
     ]))
     .then(([tmpl, parameters]) => {
-        console.log(tmpl.render(parameters));
+        logger.log(tmpl.render(parameters));
     })
     .catch((e) => {
-        console.error(`Failed to render template:\n${e.stack}`);
+        if (e.validationErrors) {
+            logger.error('Failed to render template since parameters failed validation');
+            if (logger.isJSON) {
+                logger.output.templateParameters = e.parameters;
+                logger.output.validationErrors = e.validationErrors;
+            } else {
+                logger.error(JSON.stringify(e.validationErrors, null, 2));
+                logger.error(`\nSupplied parameters:\n${JSON.stringify(e.parameters, null, 2)}`);
+            }
+        } else {
+            logger.error(`Failed to render template:\n${e.stack}`);
+        }
         process.exit(1);
     });
 
@@ -169,6 +226,10 @@ const packageTemplateSet = (tsPath, dst) => validateTemplateSet(tsPath)
 
 /* eslint-disable-next-line no-unused-expressions */
 require('yargs')
+    .option('json-output', {
+        describe: 'output JSON instead of plain text',
+        type: 'boolean'
+    })
     .command('validate <file>', 'validate given template source file', (yargs) => {
         yargs
             .positional('file', {
@@ -232,4 +293,5 @@ require('yargs')
     .demandCommand(1, 'A command is required')
     .wrap(120)
     .strict()
+    .middleware([setLogger])
     .argv;
