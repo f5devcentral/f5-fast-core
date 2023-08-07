@@ -1318,4 +1318,122 @@ describe('Template class tests', function () {
                 assert.strictEqual(rendered, reference);
             });
     });
+    it('validate_bad_type', function () {
+        const yamldata = `
+            parameters:
+                foo: 1
+                fooArray: [1, 2]
+                fooEnum: baz
+            definitions:
+                fooArray:
+                    type: array
+                    items:
+                        type: string
+                fooEnum:
+                    type: string
+                    enum:
+                        - foo
+                        - bar
+            template: |-
+                {{foo}}{{fooArray}}{{fooEnum}}
+        `;
+
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                assert.throws(() => tmpl.validateParameters(), {
+                    validationErrors: [
+                        {
+                            message: 'parameter fooArray[0] should be of type string'
+                        },
+                        {
+                            message: 'parameter fooArray[1] should be of type string'
+                        },
+                        {
+                            message: 'parameter fooEnum should be equal to one of the allowed values: foo, bar'
+                        },
+                        {
+                            message: 'parameter foo should be of type string'
+                        }
+                    ]
+                });
+            });
+    });
+    it('validate_bad_min_max', function () {
+        const yamldata = `
+            parameters:
+                minval: 1
+                maxval: 10
+                minlength: too short
+                maxlength: too long
+                minitems: []
+                maxitems: [1, 2]
+            definitions:
+                minval:
+                    type: number
+                    minimum: 2
+                maxval:
+                    type: number
+                    maximum: 1
+                minlength:
+                    type: string
+                    minLength: 10
+                maxlength:
+                    type: string
+                    maxLength: 1
+                minitems:
+                    type: array
+                    minItems: 1
+                maxitems:
+                    type: array
+                    maxItems: 1
+            template: |-
+                {{minval}}{{maxval}}{{minlength}}{{maxlength}}
+                {{minitems}}{{maxitems}}
+        `;
+
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                console.log(tmpl.getParametersSchema());
+                assert.throws(() => tmpl.validateParameters(), {
+                    validationErrors: [
+                        {
+                            message: 'parameter minval should be >= 2'
+                        },
+                        {
+                            message: 'parameter maxval should be <= 1'
+                        },
+                        {
+                            message: 'parameter minlength should NOT be shorter than 10 characters'
+                        },
+                        {
+                            message: 'parameter maxlength should NOT be longer than 1 characters'
+                        },
+                        {
+                            message: 'parameter minitems should NOT have fewer than 1 items'
+                        },
+                        {
+                            message: 'parameter maxitems should NOT have more than 1 items'
+                        }
+                    ]
+                });
+            });
+    });
+    it('validate_missing_required', function () {
+        const yamldata = `
+            parameters:
+            template: |-
+                {{foo}}
+        `;
+
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                assert.throws(() => tmpl.validateParameters(), {
+                    validationErrors: [
+                        {
+                            message: "should have required property 'foo'"
+                        }
+                    ]
+                });
+            });
+    });
 });
