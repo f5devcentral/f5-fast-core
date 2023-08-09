@@ -1,3 +1,13 @@
+# v0.22.0
+## Added
+* cli: Add --json-output flag to change all output to JSON
+
+## Changed
+* template: Change the Error message from validateParameters() to be simpler
+* template: Move validation errors and parameters from the validateParameters() Error message string to validationErrors and parameters properties on the Error object
+* template: Show all validation errors when calling validateParameters()
+* template: Parse the Ajv validation errors from validateParameters() and create easier to read/understand error messages
+
 # v0.21.0
 ## Added
 * template: Allow customizing input transform behavior via fast.transformStrategies
