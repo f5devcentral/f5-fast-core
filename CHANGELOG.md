@@ -1,3 +1,7 @@
+# v0.22.1
+## Fixed
+* template: Fix "paramters" typo in validateParameters() error
+
 # v0.22.0
 ## Added
 * cli: Add --json-output flag to change all output to JSON
