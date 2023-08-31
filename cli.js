@@ -17,8 +17,6 @@
 
 'use strict';
 
-/* eslint-disable no-console */
-
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
@@ -51,8 +49,12 @@ const setLogger = (argv) => {
             }
         };
         process.on('exit', () => {
+            if (typeof logger.output.error === 'undefined'
+                && typeof logger.output.result === 'undefined') {
+                logger.output.result = '';
+            }
             const msg = JSON.stringify(logger.output);
-            console.log(msg);
+            console.log(msg); // eslint-disable-line no-console
         });
     } else {
         logger = {
@@ -61,13 +63,13 @@ const setLogger = (argv) => {
                 if (typeof msg === 'object') {
                     msg = JSON.stringify(msg, null, 2);
                 }
-                console.log(msg);
+                console.log(msg); // eslint-disable-line no-console
             },
             error: (msg) => {
                 if (typeof msg === 'object') {
                     msg = JSON.stringify(msg, null, 2);
                 }
-                console.error(msg);
+                console.error(msg); // eslint-disable-line no-console
             }
         };
     }
@@ -185,7 +187,7 @@ const validateTemplateSet = (tsPath) => {
             templateList.map(
                 tmpl => provider.fetch(tmpl)
                     .catch((e) => {
-                        console.error(
+                        logger.error(
                             `Template "${tmpl}" failed validation:\n${e.stack}\n`
                         );
                         errorFound = true;
@@ -195,12 +197,12 @@ const validateTemplateSet = (tsPath) => {
         ))
         .then(() => {
             if (errorFound) {
-                console.error(`Template set "${tsName}" failed validation`);
+                logger.error(`Template set "${tsName}" failed validation`);
                 process.exit(1);
             }
         })
         .catch((e) => {
-            console.error(`Template set "${tsName}" failed validation:\n${e.stack}`);
+            logger.error(`Template set "${tsName}" failed validation:\n${e.stack}`);
             process.exit(1);
         });
 };
@@ -210,7 +212,7 @@ const htmlPreview = (templatePath, parametersPath) => loadTemplateAndParameters(
         tmpl.getParametersSchema(),
         tmpl.getCombinedParameters(parameters)
     ))
-    .then(htmlData => console.log(htmlData));
+    .then(htmlData => logger.log(htmlData));
 
 const packageTemplateSet = (tsPath, dst) => validateTemplateSet(tsPath)
     .then(() => {
@@ -222,7 +224,7 @@ const packageTemplateSet = (tsPath, dst) => validateTemplateSet(tsPath)
 
         return provider.buildPackage(tsName, dst)
             .then(() => {
-                console.log(`Template set "${tsName}" packaged as ${dst}`);
+                logger.log(`Template set "${tsName}" packaged as ${dst}`);
             });
     });
 
