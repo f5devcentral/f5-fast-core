@@ -1,3 +1,11 @@
+# v0.23.0
+## Fixed
+* cli: Improve JSON output for errors on validateTemplateSet and validate
+* cli: Fix JSON output for validateTemplateSet, packageTemplateSet, and htmlpreview
+
+## Changed
+* template: Include Mustache errors in getValidationErrors()
+
 # v0.22.1
 ## Fixed
 * template: Fix "paramters" typo in validateParameters() error
