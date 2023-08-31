@@ -130,21 +130,23 @@ const templateToParametersSchemaGui = templatePath => loadTemplate(templatePath)
         process.exit(1);
     });
 
-const validateParamData = (tmpl, parameters) => {
-    try {
-        tmpl.validateParameters(parameters);
-    } catch (e) {
-        logger.error(e.stack);
-        process.exit(1);
-    }
-};
-
 const validateParameters = (templatePath, parametersPath) => loadTemplateAndParameters(templatePath, parametersPath)
     .then(([tmpl, parameters]) => {
-        validateParamData(tmpl, parameters);
+        tmpl.validateParameters(parameters);
     })
     .catch((e) => {
-        logger.error(e.stack);
+        if (e.validationErrors) {
+            logger.error('parameters failed validation');
+            if (logger.isJSON) {
+                logger.output.templateParameters = e.parameters;
+                logger.output.validationErrors = e.validationErrors;
+            } else {
+                logger.error(JSON.stringify(e.validationErrors, null, 2));
+                logger.error(`\nSupplied parameters:\n${JSON.stringify(e.parameters, null, 2)}`);
+            }
+        } else {
+            logger.error(`parameters failed validation: ${e.stack}`);
+        }
         process.exit(1);
     });
 
