@@ -7,10 +7,13 @@
   "main": "index.js",
   "description": "The core module for F5 Application Services Templates",
   "scripts": {
-    "test": "mocha --recursive \"./test/*.js\"",
+    "test": "mocha --exclude test/cli.js",
+    "test.cli": "mocha test/setup-logging.js test/cli.js",
+    "test.all": "mocha",
     "lint": "eslint lib test index.js cli.js --ignore-pattern jsoneditor.js",
     "buildbin": "./scripts/build-fastbin.sh",
-    "coverage": "nyc -r text -r html npm test"
+    "coverage": "nyc -r text -r html npm test",
+    "coverage.all": "nyc -r text -r html npm run test.all"
   },
   "keywords": [
     "as3",
@@ -51,7 +54,8 @@
   "nyc": {
     "all": true,
     "include": [
-      "lib/**/*.js"
+      "lib/**/*.js",
+      "cli.js"
     ],
     "exclude": [
       "lib/jsoneditor.js"

@@ -16,7 +16,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run lint
-    - run: npm run coverage
+    - run: npm run coverage.all
   audit:
     runs-on: ubuntu-latest
     continue-on-error: true
