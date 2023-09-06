@@ -21,7 +21,6 @@ const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
 
-const Template = require('./lib/template').Template;
 const FsTemplateProvider = require('./lib/template_provider').FsTemplateProvider;
 const guiUtils = require('./lib/gui_utils');
 
@@ -82,11 +81,17 @@ const loadTemplate = (templatePath) => {
     const provider = new FsTemplateProvider(tsDir, [tsName]);
     return provider.fetch(`${tsName}/${tmplName}`)
         .catch((e) => {
-            const validationErrors = Template.getValidationErrors();
-            if (validationErrors !== 'null') {
-                logger.error(validationErrors);
+            const validationErrors = e.validationErrors;
+            const errMsg = (validationErrors) ? 'template failed validation' : e.message;
+            logger.error(`failed to load template: ${errMsg}`);
+            if (validationErrors) {
+                if (logger.isJSON) {
+                    logger.output.validationErrors = validationErrors;
+                } else {
+                    logger.error('validation errors:');
+                    logger.error(validationErrors);
+                }
             }
-            logger.error(`failed to load template\n${e.stack}`);
             process.exit(1);
         });
 };
@@ -187,9 +192,22 @@ const validateTemplateSet = (tsPath) => {
             templateList.map(
                 tmpl => provider.fetch(tmpl)
                     .catch((e) => {
-                        logger.error(
-                            `Template "${tmpl}" failed validation:\n${e.stack}\n`
-                        );
+                        const validationErrors = e.validationErrors;
+                        const errMsg = `Template ${tmpl} failed validation: ${e.message}`;
+                        if (validationErrors) {
+                            if (logger.isJSON) {
+                                if (!logger.output.errors) {
+                                    logger.output.errors = [];
+                                }
+                                logger.output.errors.push({
+                                    message: errMsg,
+                                    validationErrors
+                                });
+                            } else {
+                                logger.error(errMsg);
+                                logger.error(validationErrors);
+                            }
+                        }
                         errorFound = true;
                     })
 
