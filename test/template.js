@@ -1436,4 +1436,27 @@ describe('Template class tests', function () {
                 });
             });
     });
+    it('validate_pattern', function () {
+        const yamldata = `
+            definitions:
+                foo:
+                    pattern: bar
+            parameters:
+                foo: foo
+            template: |-
+                {{foo}}
+        `;
+
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                assert.throws(() => tmpl.validateParameters(), {
+                    validationErrors: [
+                        {
+                            message: 'parameter foo should match pattern',
+                            details: 'failed to match pattern: bar'
+                        }
+                    ]
+                });
+            });
+    });
 });
