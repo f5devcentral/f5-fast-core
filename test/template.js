@@ -1349,7 +1349,8 @@ describe('Template class tests', function () {
                             message: 'parameter fooArray[1] should be of type string'
                         },
                         {
-                            message: 'parameter fooEnum should be equal to one of the allowed values: foo, bar'
+                            message: 'parameter fooEnum should be equal to one of the allowed values',
+                            details: 'allowed values are: foo, bar'
                         },
                         {
                             message: 'parameter foo should be of type string'
