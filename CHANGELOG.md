@@ -5,6 +5,8 @@
 
 ## Changed
 * template: Include Mustache errors in getValidationErrors()
+* template: Make validation errors from failed pattern matches shorter (move expected pattern to "details")
+* template: Make validation errors from failed enum matches shorter (move allowed values to "details")
 
 # v0.22.1
 ## Fixed
