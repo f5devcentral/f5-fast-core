@@ -745,6 +745,21 @@ describe('Template class tests', function () {
                 assert.strictEqual(tmpl.render(), reference);
             });
     });
+    it('render_json_duplicate_keys', function () {
+        const yamldata = `
+            contentType: application/json
+            template: |
+                data:
+                    "{{KeyOne}}": "value1"
+                    "{{KeyTwo}}": "value2"
+        `;
+        const duplicateValue = 'duplicate_key';
+        const parameters = { KeyOne: duplicateValue, KeyTwo: duplicateValue };
+        return Template.loadYaml(yamldata)
+            .then((tmpl) => {
+                assert.throws(() => tmpl.render(parameters), /Error: parameters must have unique values. The parameter value "duplicate_key" is duplicated across parameters and you must update the parameter values to ensure they are unique./);
+            });
+    });
     it('schema_nested_sections', function () {
         const ymldata = `
             definitions:
