@@ -1,3 +1,7 @@
+# v0.24.0
+## Changed
+* template: provide more useful error message on duplicate keys during template rendering
+
 # v0.23.0
 ## Fixed
 * cli: Improve JSON output for errors on validateTemplateSet and validate
