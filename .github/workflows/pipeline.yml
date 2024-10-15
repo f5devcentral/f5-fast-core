@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
     - name: Setup Node.js ${{ matrix.node-version }}
@@ -22,7 +22,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
     - name: Setup Node.js ${{ matrix.node-version }}
@@ -39,7 +39,7 @@ jobs:
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: 12
+        node-version: 16
         registry-url: https://registry.npmjs.org/
     - run: npm ci
     - run: npm publish --access public
