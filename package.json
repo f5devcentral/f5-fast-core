@@ -1,6 +1,6 @@
 {
   "name": "@f5devcentral/f5-fast-core",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "author": "F5 Networks",
   "license": "Apache-2.0",
   "repository": "github:f5devcentral/f5-fast-core",
@@ -25,7 +25,6 @@
     "fast": "./cli.js"
   },
   "devDependencies": {
-    "@f5devcentral/eslint-config-f5-atg": "^0.1.8",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.50.0",
@@ -33,23 +32,6 @@
     "mocha": "^10.2.0",
     "nock": "^13.3.3",
     "nyc": "^15.1.0"
-  },
-  "eslintConfig": {
-    "extends": "@f5devcentral/eslint-config-f5-atg",
-    "rules": {
-      "no-control-regex": "off",
-      "arrow-parens": [
-        "error",
-        "as-needed",
-        {
-          "requireForBlockBody": true
-        }
-      ],
-      "max-classes-per-file": "off"
-    },
-    "parserOptions": {
-      "ecmaVersion": 8
-    }
   },
   "nyc": {
     "all": true,
