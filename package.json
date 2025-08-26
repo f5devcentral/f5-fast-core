@@ -7,6 +7,7 @@
   "main": "index.js",
   "description": "The core module for F5 Application Services Templates",
   "scripts": {
+    "audit-production": "npm audit --production --json > .auditReport.json; npx f5-fast-audit-npm",
     "test": "mocha --exclude test/cli.js",
     "test.cli": "mocha test/setup-logging.js test/cli.js",
     "test.all": "mocha",
@@ -22,7 +23,8 @@
     "api"
   ],
   "bin": {
-    "fast": "./cli.js"
+    "fast": "./cli.js",
+    "f5-fast-audit-npm": "./scripts/auditProcessor.js"
   },
   "devDependencies": {
     "chai": "^4.3.10",

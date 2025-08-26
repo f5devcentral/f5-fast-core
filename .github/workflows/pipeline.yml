@@ -29,7 +29,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci && npm audit --production
+    - run: npm ci && npm run audit-production
   publish:
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     needs: [test, audit]
