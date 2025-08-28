@@ -3,7 +3,7 @@ set -eu
 
 version=$(./scripts/getversion.sh)
 outdir=./dist
-targets=node12-win,node12-macos,node12-linux,node12-alpine
+targets=node22-win,node22-macos,node22-linux,node22-alpine
 
 # Generate binaries
 pkg . -t ${targets} -o "${outdir}/fast-${version}"
