@@ -1,3 +1,10 @@
+# v0.25.0
+## Changed
+* Update dependencies
+  
+## Added
+* Add AuditProcessor
+
 # v0.24.0
 ## Changed
 * template: provide more useful error message on duplicate keys during template rendering
