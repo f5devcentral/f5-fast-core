@@ -1,4 +1,8 @@
-# v0.25.0
+# v0.26.0
+## Fixed
+* Vulnerabilities patched, but committed a partial of jsonplus-path package to vendor ourselves. This prevens FAST rpm loading failures on BIG-IP when node can't find the only patched version of it in npm: 10.3.0
+
+* # v0.25.0
 ## Changed
 * Update dependencies
   
