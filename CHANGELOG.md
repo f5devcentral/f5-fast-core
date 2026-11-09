@@ -1,3 +1,8 @@
+# v0.26.2
+## Fixed
+* Updated axios to 1.21.1 to resolve GHSA-m8m8-qj5v-23w3, GHSA-mghh-pgcx-3jjj and related axios advisories (proxy/NO_PROXY handling, redirect header leaks, cookie ReDoS)
+* Updated js-yaml to 4.3.2 (and the dev-only transitive 3.x copy to 3.15.2) to resolve GHSA-2883-xcg3-v3hh and GHSA-5p4m-2wfm-xmqj
+
 # v0.26.1
 ## Fixed
 * Updated axios to 1.15.2 to resolve GHSA-43fc-jf86-j433 and GHSA-3p68-rc4w-qgx5
