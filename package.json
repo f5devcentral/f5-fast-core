@@ -31,9 +31,14 @@
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.50.0",
     "eslint-plugin-import": "^2.28.1",
-    "mocha": "^11.7.5",
+    "mocha": "^12.0.3",
     "nock": "^13.3.3",
     "nyc": "^18.0.0"
+  },
+  "overrides": {
+    "follow-redirects": "^1.16.3",
+    "glob": "^14.0.6",
+    "minimatch": "^11.0.8"
   },
   "nyc": {
     "all": true,
@@ -51,17 +56,11 @@
     "adm-zip": "^0.6.1",
     "ajv": "^6.12.6",
     "axios": "^1.21.1",
-    "brace-expansion": "^5.0.12",
-    "deepmerge": "^4.3.1",
-    "diff": "^9.0.0",
-    "flatted": "^3.4.2",
-    "follow-redirects": "^1.16.0",
+    "deepmerge-ts": "^8.0.2",
     "js-yaml": "^4.3.2",
     "math-expression-evaluator": "^1.4.0",
     "merge-lite": "^1.0.2",
-    "minimatch": "^11.0.5",
     "mustache": "^4.2.0",
-    "picomatch": "^4.0.4",
     "yargs": "^17.7.2"
   },
   "auditProcessor": {
@@ -71,8 +70,6 @@
       "GHSA-5c6j-r48x-rmvq",
       "GHSA-qj8w-gfj5-8c6v",
       "GHSA-w5hq-g745-h8pq",
-      "GHSA-gcqx-w48m-w2h4",
-      1243505,
       1113714,
       1112706,
       1113686,
