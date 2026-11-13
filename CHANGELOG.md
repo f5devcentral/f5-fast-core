@@ -1,3 +1,14 @@
+# v0.26.2
+## Fixed
+* Updated axios to 1.21.1 to resolve GHSA-m8m8-qj5v-23w3, GHSA-mghh-pgcx-3jjj and related axios advisories (proxy/NO_PROXY handling, redirect header leaks, cookie ReDoS)
+* Updated js-yaml to 4.3.2 (and the dev-only transitive 3.x copy to 3.15.2) to resolve GHSA-2883-xcg3-v3hh and GHSA-5p4m-2wfm-xmqj
+* Updated adm-zip to 0.6.1 to resolve GHSA-xcpc-8h2w-3j85
+* Removed unused direct dependencies brace-expansion, diff, flatted, follow-redirects, minimatch and picomatch; they remain only as transitive dependencies at patched versions
+* Replaced deepmerge with deepmerge-ts 8.0.2 to resolve GHSA-gcqx-w48m-w2h4 (no patched deepmerge release exists)
+* Updated mocha to 12.0.3 (dev-only) to resolve diff and serialize-javascript advisories; requires Node ^20.19.0 || >=22.12.0 for development
+* Added dev-only `overrides` for glob (^14.0.6) and minimatch (^11.0.8) to resolve GHSA-3g3m-2fjr-6pw4 and GHSA-g3hv-75wg-m249 in mocha/nyc
+* Refreshed other transitive dependencies (ajv, uuid, brace-expansion, @babel/core, browserslist) via `npm audit fix`
+
 # v0.26.1
 ## Fixed
 * Updated axios to 1.15.2 to resolve GHSA-43fc-jf86-j433 and GHSA-3p68-rc4w-qgx5
